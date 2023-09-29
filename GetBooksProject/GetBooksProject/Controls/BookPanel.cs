@@ -36,8 +36,21 @@ namespace GetBooksProject.Controls
             _price.Name = "priceLabel";
             _name.Text = _book.Name;
             _author.Text = _book.Author;
-            //добавить Price в класс Book
-            _price.Visible = false;
+
+            if (_book.Price == 0)
+            {
+                _price.Text = "Нет в продаже";
+            }
+            else
+            {
+                _price.Text = _book.Price.ToString();
+            }
+
+            if (!IsPriceShow)
+            {
+                _price.Visible = false;
+            }
+
             AddLabel(_name);
             AddLabel(_author);
             AddLabel(_price);
