@@ -1,0 +1,10 @@
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\GetBooksProject.exe.config
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\GetBooksProject.exe
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\GetBooksProject.pdb
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.csproj.AssemblyReference.cache
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.Form1.resources
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.Properties.Resources.resources
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.csproj.GenerateResource.cache
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.csproj.CoreCompileInputs.cache
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.exe
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.pdb
