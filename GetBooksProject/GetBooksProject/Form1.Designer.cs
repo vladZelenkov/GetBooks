@@ -31,8 +31,9 @@ namespace GetBooksProject
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.myBooksTabPage = new System.Windows.Forms.TabPage();
-            this.findBooksTabPage = new System.Windows.Forms.TabPage();
+            this.addBookPanelButton = new System.Windows.Forms.Button();
             this.myBooksFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.findBooksTabPage = new System.Windows.Forms.TabPage();
             this.findBooksFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1.SuspendLayout();
             this.myBooksTabPage.SuspendLayout();
@@ -52,6 +53,7 @@ namespace GetBooksProject
             // 
             // myBooksTabPage
             // 
+            this.myBooksTabPage.Controls.Add(this.addBookPanelButton);
             this.myBooksTabPage.Controls.Add(this.myBooksFlowLayoutPanel);
             this.myBooksTabPage.Location = new System.Drawing.Point(4, 22);
             this.myBooksTabPage.Name = "myBooksTabPage";
@@ -60,6 +62,26 @@ namespace GetBooksProject
             this.myBooksTabPage.TabIndex = 0;
             this.myBooksTabPage.Text = "Мои книги";
             this.myBooksTabPage.UseVisualStyleBackColor = true;
+            // 
+            // addBookPanelButton
+            // 
+            this.addBookPanelButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.addBookPanelButton.Location = new System.Drawing.Point(3, 398);
+            this.addBookPanelButton.Name = "addBookPanelButton";
+            this.addBookPanelButton.Size = new System.Drawing.Size(882, 35);
+            this.addBookPanelButton.TabIndex = 0;
+            this.addBookPanelButton.Text = "Добавить BookPanel";
+            this.addBookPanelButton.UseVisualStyleBackColor = true;
+            this.addBookPanelButton.Click += new System.EventHandler(this.addBookPanelButton_Click);
+            // 
+            // myBooksFlowLayoutPanel
+            // 
+            this.myBooksFlowLayoutPanel.AutoScroll = true;
+            this.myBooksFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.myBooksFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.myBooksFlowLayoutPanel.Name = "myBooksFlowLayoutPanel";
+            this.myBooksFlowLayoutPanel.Size = new System.Drawing.Size(882, 430);
+            this.myBooksFlowLayoutPanel.TabIndex = 0;
             // 
             // findBooksTabPage
             // 
@@ -71,14 +93,6 @@ namespace GetBooksProject
             this.findBooksTabPage.TabIndex = 1;
             this.findBooksTabPage.Text = "Найти книги";
             this.findBooksTabPage.UseVisualStyleBackColor = true;
-            // 
-            // myBooksFlowLayoutPanel
-            // 
-            this.myBooksFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.myBooksFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
-            this.myBooksFlowLayoutPanel.Name = "myBooksFlowLayoutPanel";
-            this.myBooksFlowLayoutPanel.Size = new System.Drawing.Size(882, 430);
-            this.myBooksFlowLayoutPanel.TabIndex = 0;
             // 
             // findBooksFlowLayoutPanel
             // 
@@ -110,6 +124,7 @@ namespace GetBooksProject
         private System.Windows.Forms.TabPage findBooksTabPage;
         private System.Windows.Forms.FlowLayoutPanel myBooksFlowLayoutPanel;
         private System.Windows.Forms.FlowLayoutPanel findBooksFlowLayoutPanel;
+        private System.Windows.Forms.Button addBookPanelButton;
     }
 }
 
