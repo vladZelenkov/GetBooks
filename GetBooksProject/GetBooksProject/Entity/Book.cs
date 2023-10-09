@@ -17,7 +17,7 @@ namespace GetBooksProject.Entity
             ImagePath = "Pictures\\defaultBookPicture.png";
             _authors = new List<string>();
             PublishingHouse = string.Empty;
-            Year = -1;
+            Year = 0;
         }
 
         public string Name { get; set; }
@@ -33,7 +33,7 @@ namespace GetBooksProject.Entity
             set
             {
                 int currentYear = DateTime.Now.Year;
-                bool isRealYear = value > 0 && value <= currentYear;
+                bool isRealYear = value >= 0 && value <= currentYear;
 
                 if (isRealYear)
                 {
