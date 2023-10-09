@@ -43,20 +43,24 @@ namespace GetBooksProject.Controls
             AutoSize = true;
             Margin = new Padding(3);
             _name.Text = _book.Name;
-            _author.Text = _book.Author;
+            _author.Text = _book.GetAuthors()[0];
 
-            if (_book.Price == 0)
+            if (_book is ProductBook)
             {
-                _price.Text = "Нет в продаже";
-            }
-            else
-            {
-                _price.Text = _book.Price.ToString() + " руб.";
-            }
+                ProductBook book = (ProductBook)_book;
+                if (book.PriceMessage == string.Empty)
+                {
+                    _price.Text = "Нет в продаже";
+                }
+                else
+                {
+                    _price.Text = book.PriceMessage + " руб.";
+                }
 
-            if (!IsPriceShow)
-            {
-                _price.Visible = false;
+                if (!IsPriceShow)
+                {
+                    _price.Visible = false;
+                }
             }
 
             SetPicture(_defailtPicturePath);
