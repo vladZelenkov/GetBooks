@@ -14,7 +14,7 @@ namespace GetBooksProject.Entity
         public Book(string name)
         {
             Name = name;
-            ImagePath = "Pictures\\defaultBookPicture.png";
+            ImagePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
             _authors = new List<string>();
             PublishingHouse = string.Empty;
             Year = 0;
