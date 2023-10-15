@@ -15,11 +15,13 @@ namespace GetBooksProject
     public partial class Form1 : Form
     {
         private static Label _infoLabel;
+        private BookPanel _myBookPanel;
 
         public Form1()
         {
             InitializeComponent();
             _infoLabel = informLable;
+            _myBookPanel = new BookPanel(storageBookPanel);
         }
 
         private void addBookPanelButton_Click(object sender, EventArgs e)

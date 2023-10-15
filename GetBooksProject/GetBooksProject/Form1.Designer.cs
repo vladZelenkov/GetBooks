@@ -32,6 +32,7 @@ namespace GetBooksProject
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.myBooksTabPage = new System.Windows.Forms.TabPage();
+            this.updateButton = new System.Windows.Forms.Button();
             this.bookParametersComboBox = new System.Windows.Forms.ComboBox();
             this.findStorageBookTextBox = new System.Windows.Forms.TextBox();
             this.findStorageBooksButton = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@ namespace GetBooksProject
             this.addChangeTabPage = new System.Windows.Forms.TabPage();
             this.informPanel = new System.Windows.Forms.Panel();
             this.informLable = new System.Windows.Forms.Label();
-            this.updateButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.myBooksTabPage.SuspendLayout();
             this.findBooksTabPage.SuspendLayout();
@@ -82,6 +82,15 @@ namespace GetBooksProject
             this.myBooksTabPage.TabIndex = 0;
             this.myBooksTabPage.Text = "Мои книги";
             this.myBooksTabPage.UseVisualStyleBackColor = true;
+            // 
+            // updateButton
+            // 
+            this.updateButton.Image = ((System.Drawing.Image)(resources.GetObject("updateButton.Image")));
+            this.updateButton.Location = new System.Drawing.Point(3, 2);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(21, 23);
+            this.updateButton.TabIndex = 4;
+            this.updateButton.UseVisualStyleBackColor = true;
             // 
             // bookParametersComboBox
             // 
@@ -227,15 +236,6 @@ namespace GetBooksProject
             this.informLable.Size = new System.Drawing.Size(25, 13);
             this.informLable.TabIndex = 2;
             this.informLable.Text = "Info";
-            // 
-            // updateButton
-            // 
-            this.updateButton.Image = ((System.Drawing.Image)(resources.GetObject("updateButton.Image")));
-            this.updateButton.Location = new System.Drawing.Point(3, 2);
-            this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(21, 23);
-            this.updateButton.TabIndex = 4;
-            this.updateButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

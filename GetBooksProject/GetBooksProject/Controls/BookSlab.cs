@@ -122,7 +122,7 @@ namespace GetBooksProject.Controls
                     }
                     else
                     {
-                        throw;
+                        Form1.SetMessage($"Изображение {path} не найдено");
                     }
                 }
                 catch (Exception)
