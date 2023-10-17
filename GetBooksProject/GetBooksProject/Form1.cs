@@ -30,7 +30,7 @@ namespace GetBooksProject
             book.AddAuthor("Мария Вой");
             book.PublishingHouse = "ООО Издательство \"Эксмо\"";
             book.Year = 2022;
-            BookSlab bookPanel = new BookSlab(book, true);
+            BookSlab bookPanel = new BookSlab(book, _myBookPanel);
             FlowLayoutPanel panel = storageBooksFlowLayoutPanel;
             bookPanel.Size = new Size(panel.Width - panel.Margin.Left - SystemInformation.VerticalScrollBarWidth, 0);
             storageBooksFlowLayoutPanel.Controls.Add(bookPanel);

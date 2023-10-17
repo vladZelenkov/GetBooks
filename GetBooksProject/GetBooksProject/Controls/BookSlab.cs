@@ -13,26 +13,21 @@ namespace GetBooksProject.Controls
     class BookSlab : Panel
     {
         private Book _book;
-        private Label _name;
-        private Label _author;
-        private Label _price;
+        private Label _shortInfo;
         private PictureBox _picture;
+        private BookPanel _display;
         private string _defailtPicturePath;
 
 
-        public BookSlab(Book book, bool isPriceShow)
+        public BookSlab(Book book, BookPanel display)
         {
             _book = book;
-            _name = new Label();
-            _author = new Label();
-            _price = new Label();
+            _display = display;
+            _shortInfo = new Label();
             _picture = new PictureBox();
             _defailtPicturePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
-            IsPriceShow = isPriceShow;
             SetParameters();
         }
-
-        public bool IsPriceShow { get; set; }
 
         private void SetParameters()
         {
@@ -40,70 +35,37 @@ namespace GetBooksProject.Controls
             BorderStyle = BorderStyle.FixedSingle;
             BackColor = Color.FromArgb(252, 252, 238);
             AutoSize = true;
-            Margin = new Padding(3);
-            _name.Text = _book.Name;
-            List<string> authors = _book.GetAuthors();
-            _author.Text = authors[0];
+            MinimumSize = new Size(290, 100);
+            MouseHover += slab_MouseHover;
+            MouseLeave += slab_MouseLeave;
+            MouseClick += slab_MouseClick;
 
-            for (int i = 1; i < authors.Count; i++)
-            {
-                _author.Text += ", " + authors[i];
-            }
-
-            if (_book is ProductBook)
-            {
-                ProductBook book = (ProductBook)_book;
-                if (book.PriceMessage == string.Empty)
-                {
-                    _price.Text = "Нет в продаже";
-                }
-                else
-                {
-                    _price.Text = book.PriceMessage + " руб.";
-                }
-
-                if (!IsPriceShow)
-                {
-                    _price.Visible = false;
-                }
-            }
-
-            SetPicture(_defailtPicturePath);
             SetPictureParameters();
-            Controls.Add(_picture);
-            AddLabel(_name);
-            AddLabel(_author);
-            AddLabel(_price);
+            SetInfoParameters();
+            SetPicture(_defailtPicturePath);
+        }
+
+        private void SetInfoParameters()
+        {
+            int indent = 5;
+            _shortInfo.Left = _picture.Width + indent;
+            _shortInfo.Top = indent;
+            _shortInfo.AutoSize = true;
+            _shortInfo.Text = _book.GetShortInfo();
+            _shortInfo.MouseHover += slab_MouseHover;
+            _shortInfo.MouseLeave += slab_MouseLeave;
+            _shortInfo.MouseClick += slab_MouseClick;
+            Controls.Add(_shortInfo);
         }
 
         private void SetPictureParameters()
         {
             _picture.SizeMode = PictureBoxSizeMode.Zoom;
             _picture.Size = new Size(100, 100);
-        }
-
-        private void AddLabel(Label label)
-        {
-            int indent = 5;
-            Size minSize = new Size();
-            minSize.Width = Width;
-
-            label.AutoSize = true;
-            label.MinimumSize = minSize;
-            label.Margin = new Padding(0, indent, 0, indent);
-            int top = 0;
-
-            foreach (Control control in Controls)
-            {
-                if (control is Label)
-                {
-                    top += control.Height + indent;
-                }
-            }
-
-            label.Top = top;
-            label.Left = _picture.Width;
-            Controls.Add(label);
+            _picture.MouseHover += slab_MouseHover;
+            _picture.MouseLeave += slab_MouseLeave;
+            _picture.MouseClick += slab_MouseClick;
+            Controls.Add(_picture);
         }
 
         public void SetPicture(string path)
@@ -136,17 +98,21 @@ namespace GetBooksProject.Controls
             }
         }
 
-        protected override void OnMouseHover(EventArgs e)
+        private void slab_MouseHover(object sender, EventArgs e)
         {
             BackColor = Color.FromArgb(255, 248, 168);
             Cursor = Cursors.Hand;
         }
 
-        protected override void OnMouseLeave(EventArgs e)
+        private void slab_MouseLeave(object sender, EventArgs e)
         {
-            base.OnMouseLeave(e);
             BackColor = Color.FromArgb(252, 252, 238);
             Cursor = Cursors.Default;
+        }
+
+        private void slab_MouseClick(object sender, EventArgs e)
+        {
+            _display.SetBook(_book);
         }
     }
 }
