@@ -69,5 +69,31 @@ namespace GetBooksProject.Entity
 
             return authors;
         }
+
+        public virtual string GetFullInfo()
+        {
+            StringBuilder info = new StringBuilder(GetShortInfo());
+
+            info.AppendLine("\nИздательство: " + PublishingHouse);
+            info.Append(Year + "год");
+
+            return info.ToString();
+        }
+
+        public virtual string GetShortInfo()
+        {
+            StringBuilder info = new StringBuilder();
+            info.AppendLine(Name);
+
+            foreach (string author in _authors)
+            {
+                info.Append(author);
+                info.Append(',');
+            }
+
+            info.Remove(info.Length - 1, 1);
+
+            return info.ToString();
+        }
     }
 }
