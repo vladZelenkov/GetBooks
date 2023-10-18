@@ -16,12 +16,17 @@ namespace GetBooksProject
     {
         private static Label _infoLabel;
         private BookPanel _myBookPanel;
+        private AuthorPanel _authorPanel;
 
         public Form1()
         {
             InitializeComponent();
             _infoLabel = informLable;
             _myBookPanel = new BookPanel(storageBookPanel);
+            int authorPanelTop = authorComboBox.Top + authorComboBox.Height + 5;
+            _authorPanel = new AuthorPanel(authorPanelTop, 0, authorComboBox, shiftedPanel);
+            changePanel.Controls.Add(_authorPanel);
+            addedPictureBox.Image = Image.FromFile(XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture"));
         }
 
         private void addBookPanelButton_Click(object sender, EventArgs e)
@@ -39,6 +44,36 @@ namespace GetBooksProject
         public static void SetMessage(string message)
         {
             _infoLabel.Text = message;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (imageOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    addedPictureBox.Image = Image.FromFile(imageOpenFileDialog.FileName);
+                }
+                catch (Exception)
+                {
+                    SetMessage("Не удалось загрузить изображение");
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _authorPanel.AddAuthor();
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            _authorPanel.Clear();
+            nameTextBox.Text = string.Empty;
+            authorComboBox.Text = string.Empty;
+            publishingHouseComboBox.Text = string.Empty;
+            yearTextBox.Text = string.Empty;
+            addedPictureBox.Image = Image.FromFile(XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture"));
         }
     }
 }

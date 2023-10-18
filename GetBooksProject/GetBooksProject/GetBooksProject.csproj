@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AuthorPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\BookPanel.cs" />
     <Compile Include="Controls\BookSlab.cs">
       <SubType>Component</SubType>
