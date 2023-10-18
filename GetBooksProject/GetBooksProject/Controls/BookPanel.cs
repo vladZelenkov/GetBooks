@@ -11,9 +11,10 @@ namespace GetBooksProject.Controls
 {
     class BookPanel
     {
-        private Panel _panel;
-        private PictureBox _picture;
-        private Label _info;
+        protected Panel _panel;
+        protected PictureBox _picture;
+        protected Label _info;
+        protected Book _book;
 
         public BookPanel(Panel panel)
         {
@@ -55,6 +56,7 @@ namespace GetBooksProject.Controls
         {
             _picture.Image = Image.FromFile(book.ImagePath);
             _info.Text = book.GetFullInfo();
+            _book = book;
         }
     }
 }

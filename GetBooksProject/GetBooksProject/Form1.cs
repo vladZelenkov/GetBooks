@@ -15,14 +15,15 @@ namespace GetBooksProject
     public partial class Form1 : Form
     {
         private static Label _infoLabel;
-        private BookPanel _myBookPanel;
+        private StorageBookPanel _myBookPanel;
         private AuthorPanel _authorPanel;
 
         public Form1()
         {
             InitializeComponent();
             _infoLabel = informLable;
-            _myBookPanel = new BookPanel(storageBookPanel);
+            _myBookPanel = new StorageBookPanel(storageBookPanel);
+            _myBookPanel.SetChangeBook(ChangeBook);
             int authorPanelTop = authorComboBox.Top + authorComboBox.Height + 5;
             _authorPanel = new AuthorPanel(authorPanelTop, 0, authorComboBox, shiftedPanel);
             changePanel.Controls.Add(_authorPanel);
@@ -31,7 +32,7 @@ namespace GetBooksProject
 
         private void addBookPanelButton_Click(object sender, EventArgs e)
         {
-            Book book = new Book("Сиротки");
+            Book book = new StorageBook(1, "Сиротки");
             book.AddAuthor("Мария Вой");
             book.PublishingHouse = "ООО Издательство \"Эксмо\"";
             book.Year = 2022;
@@ -74,6 +75,38 @@ namespace GetBooksProject
             publishingHouseComboBox.Text = string.Empty;
             yearTextBox.Text = string.Empty;
             addedPictureBox.Image = Image.FromFile(XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture"));
+        }
+
+        private void yearTextBox_Leave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            int currentDate = DateTime.Now.Year;
+
+            if (int.TryParse(textBox.Text, out int value))
+            {
+                if (value >= 0 && value <= currentDate)
+                {
+                    textBox.ForeColor = Color.Black;
+                }
+                else
+                {
+                    textBox.ForeColor = Color.Red;
+                }
+            }
+            else
+            {
+                textBox.ForeColor = Color.Red;
+            }
+        }
+
+        private void ChangeBook(StorageBook book)
+        {
+            tabControl1.SelectedIndex = 2;
+            nameTextBox.Text = book.Name;
+            authorComboBox.Text = book.GetAuthors()[0];
+            publishingHouseComboBox.Text = book.PublishingHouse;
+            yearTextBox.Text = book.Year.ToString();
+            addedPictureBox.Image = Image.FromFile(book.ImagePath);
         }
     }
 }
