@@ -16,7 +16,7 @@ namespace GetBooksProject
     {
         private static Label _infoLabel;
         private StorageBookPanel _myBookPanel;
-        private AuthorPanel _authorPanel;
+        private ChangePanel _changePanel;
 
         public Form1()
         {
@@ -24,16 +24,15 @@ namespace GetBooksProject
             _infoLabel = informLable;
             _myBookPanel = new StorageBookPanel(storageBookPanel);
             _myBookPanel.SetChangeBook(ChangeBook);
-            int authorPanelTop = authorComboBox.Top + authorComboBox.Height + 5;
-            _authorPanel = new AuthorPanel(authorPanelTop, 0, authorComboBox, shiftedPanel);
-            changePanel.Controls.Add(_authorPanel);
-            addedPictureBox.Image = Image.FromFile(XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture"));
+            _changePanel = new ChangePanel(addChangeTabPage.Width / 2, addChangeTabPage.Width / 4);
+            addChangeTabPage.Controls.Add(_changePanel);
         }
 
         private void addBookPanelButton_Click(object sender, EventArgs e)
         {
             Book book = new StorageBook(1, "Сиротки");
             book.AddAuthor("Мария Вой");
+            book.AddAuthor("Александр Пушкин");
             book.PublishingHouse = "ООО Издательство \"Эксмо\"";
             book.Year = 2022;
             BookSlab bookPanel = new BookSlab(book, _myBookPanel);
@@ -45,36 +44,6 @@ namespace GetBooksProject
         public static void SetMessage(string message)
         {
             _infoLabel.Text = message;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (imageOpenFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    addedPictureBox.Image = Image.FromFile(imageOpenFileDialog.FileName);
-                }
-                catch (Exception)
-                {
-                    SetMessage("Не удалось загрузить изображение");
-                }
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            _authorPanel.AddAuthor();
-        }
-
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            _authorPanel.Clear();
-            nameTextBox.Text = string.Empty;
-            authorComboBox.Text = string.Empty;
-            publishingHouseComboBox.Text = string.Empty;
-            yearTextBox.Text = string.Empty;
-            addedPictureBox.Image = Image.FromFile(XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture"));
         }
 
         private void yearTextBox_Leave(object sender, EventArgs e)
@@ -102,11 +71,7 @@ namespace GetBooksProject
         private void ChangeBook(StorageBook book)
         {
             tabControl1.SelectedIndex = 2;
-            nameTextBox.Text = book.Name;
-            authorComboBox.Text = book.GetAuthors()[0];
-            publishingHouseComboBox.Text = book.PublishingHouse;
-            yearTextBox.Text = book.Year.ToString();
-            addedPictureBox.Image = Image.FromFile(book.ImagePath);
+            _changePanel.SetBook(book);
         }
     }
 }

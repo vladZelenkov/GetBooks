@@ -53,6 +53,9 @@
     <Compile Include="Controls\BookSlab.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ChangePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\StorageBookPanel.cs" />
     <Compile Include="Entity\Book.cs" />
     <Compile Include="Entity\Library.cs" />

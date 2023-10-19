@@ -15,12 +15,14 @@ namespace GetBooksProject.Controls
         private int _shiftPanelTop;
         private Panel _shiftPanel;
 
-        public AuthorPanel(int top, int left, ComboBox topElement, Panel shiftPanel)
+        public AuthorPanel(int top, int left, int width, ComboBox topElement, Panel shiftPanel)
         {
             _topElement = topElement;
             Left = left;
             Top = top;
+            Width = width;
             AutoSize = true;
+            Height = 0;
             _authors = new List<ComboBox>();
             _closeButtons = new List<Button>();
             _shiftPanel = shiftPanel;
@@ -70,6 +72,25 @@ namespace GetBooksProject.Controls
             _authors.Clear();
             _closeButtons.Clear();
             Relocation();
+        }
+
+        public void SetAuthors(List<string> authors)
+        {
+            if (authors.Count > 0)
+            {
+                for (int i = 0; i < authors.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        _topElement.Text = authors[i];
+                    }
+                    else
+                    {
+                        AddAuthor();
+                        _authors[i - 1].Text = authors[i];
+                    }
+                }
+            }
         }
 
         private void CloseButtonClick(object sendler, EventArgs e)
