@@ -15,15 +15,18 @@ namespace GetBooksProject
     public partial class Form1 : Form
     {
         private static Label _infoLabel;
-        private StorageBookPanel _myBookPanel;
+        private StorageBookPanel _storageBookPanel;
+        private ProductBookPanel _productBookPanel;
         private ChangePanel _changePanel;
 
         public Form1()
         {
             InitializeComponent();
             _infoLabel = informLable;
-            _myBookPanel = new StorageBookPanel(storageBookPanel);
-            _myBookPanel.SetChangeBook(ChangeBook);
+            _storageBookPanel = new StorageBookPanel(storageBookPanel);
+            _storageBookPanel.SetChangeBook(ChangeBook);
+            _productBookPanel = new ProductBookPanel(productBookPanel);
+            _productBookPanel.SetAddBook(AddBook);
             _changePanel = new ChangePanel(addChangeTabPage.Width / 2, addChangeTabPage.Width / 4);
             addChangeTabPage.Controls.Add(_changePanel);
         }
@@ -35,10 +38,24 @@ namespace GetBooksProject
             book.AddAuthor("Александр Пушкин");
             book.PublishingHouse = "ООО Издательство \"Эксмо\"";
             book.Year = 2022;
-            BookSlab bookPanel = new BookSlab(book, _myBookPanel);
+            BookSlab bookPanel = new BookSlab(book, _storageBookPanel);
             FlowLayoutPanel panel = storageBooksFlowLayoutPanel;
             bookPanel.Size = new Size(panel.Width - panel.Margin.Left - SystemInformation.VerticalScrollBarWidth, 0);
             storageBooksFlowLayoutPanel.Controls.Add(bookPanel);
+        }
+
+        private void findProductsBooksButton_Click(object sender, EventArgs e)
+        {
+            ProductBook book = new ProductBook("Сиротки");
+            book.AddAuthor("Мария Вой");
+            book.AddAuthor("Александр Пушкин");
+            book.PriceMessage = "100 руб";
+            book.PublishingHouse = "ООО Издательство \"Эксмо\"";
+            book.Year = 2022;
+            BookSlab bookPanel = new BookSlab(book, _productBookPanel);
+            FlowLayoutPanel panel = storageBooksFlowLayoutPanel;
+            bookPanel.Size = new Size(panel.Width - panel.Margin.Left - SystemInformation.VerticalScrollBarWidth, 0);
+            productBooksFlowLayoutPanel.Controls.Add(bookPanel);
         }
 
         public static void SetMessage(string message)
@@ -70,7 +87,13 @@ namespace GetBooksProject
 
         private void ChangeBook(StorageBook book)
         {
-            tabControl1.SelectedIndex = 2;
+            tabControl1.SelectedTab = addChangeTabPage;
+            _changePanel.SetBook(book);
+        }
+
+        private void AddBook(ProductBook book)
+        {
+            tabControl1.SelectedTab = addChangeTabPage;
             _changePanel.SetBook(book);
         }
     }

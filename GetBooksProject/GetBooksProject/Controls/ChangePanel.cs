@@ -24,6 +24,7 @@ namespace GetBooksProject.Controls
         private OpenFileDialog _openImage;
         private TextBox _year;
         private Book _book;
+        private string _defaultImagePath;
 
         public ChangePanel(int width, int left)
         {
@@ -40,9 +41,12 @@ namespace GetBooksProject.Controls
             _openImage = new OpenFileDialog();
             _publishingHouse = new ComboBox();
             _year = new TextBox();
+            _defaultImagePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
             SetParameters();
             clearMouseClick(_clear, new EventArgs());
         }
+
+        private bool IsDefaultImage { get; set; }
 
         private void SetParameters()
         {
@@ -106,10 +110,9 @@ namespace GetBooksProject.Controls
             _setImage.Top = _year.Bottom + indent;
             _setImage.Width = Width / 2;
             _setImage.Left = _year.Left;
-            _setImage.Text = "Выбрать изображение";
             _setImage.Height = buttonHeight;
-            _shiftPanel.Controls.Add(_setImage);
             _setImage.MouseClick += setImageMouseClick;
+            _shiftPanel.Controls.Add(_setImage);
             //image
             _image.Top = _setImage.Bottom + indent;
             _image.Left = _setImage.Left;
@@ -142,6 +145,7 @@ namespace GetBooksProject.Controls
 
         public void SetBook(Book book)
         {
+            clearMouseClick(_clear, new EventArgs());
             _book = book;
             _name.Text = _book.Name;
             _publishingHouse.Text = book.PublishingHouse;
@@ -165,6 +169,16 @@ namespace GetBooksProject.Controls
             try
             {
                 _image.Image = Image.FromFile(path);
+                IsDefaultImage = path == _defaultImagePath;
+
+                if (IsDefaultImage)
+                {
+                    _setImage.Text = "Выбрать изображение";
+                }
+                else
+                {
+                    _setImage.Text = "Убрать изображение";
+                }
             }
             catch (Exception)
             {
@@ -179,10 +193,18 @@ namespace GetBooksProject.Controls
 
         private void setImageMouseClick(object sender, EventArgs e)
         {
-            if (_openImage.ShowDialog() == DialogResult.OK)
+            if (IsDefaultImage)
             {
-                SetImage(_openImage.FileName);
+                if (_openImage.ShowDialog() == DialogResult.OK)
+                {
+                    SetImage(_openImage.FileName);
+                }
             }
+            else
+            {
+                SetImage(_defaultImagePath);
+            }
+
         }
 
         private void clearMouseClick(object sender, EventArgs e)
@@ -193,7 +215,7 @@ namespace GetBooksProject.Controls
             _author.Text = string.Empty;
             _publishingHouse.Text = string.Empty;
             _year.Text = string.Empty;
-            _image.Image = Image.FromFile(XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture"));
+            SetImage(_defaultImagePath);
             _change.Text = "Добавить";
         }
     }

@@ -11,52 +11,56 @@ namespace GetBooksProject.Controls
 {
     class BookPanel
     {
-        protected Panel _panel;
-        protected PictureBox _picture;
-        protected Label _info;
-        protected Book _book;
+        protected Panel Panel;
+        protected PictureBox Picture;
+        protected Label Info;
+        protected Book Book;
 
         public BookPanel(Panel panel)
         {
-            _panel = panel;
-            _picture = new PictureBox();
-            _info = new Label();
+            Panel = panel;
+            Picture = new PictureBox();
+            Info = new Label();
             SetPanelParameters();
         }
 
+        protected int ButtonHeight { get; } = 30;
+        protected int ButtonIndent { get; } = 2;
+
         private void SetPanelParameters()
         {
-            _panel.AutoScroll = true;
+            Panel.AutoScroll = true;
             SetPictureParameters();
             SetInfoParameters();
         }
 
         private void SetPictureParameters()
         {
-            _picture.SizeMode = PictureBoxSizeMode.Zoom;
-            _picture.Height = _panel.Width;
-            _picture.Dock = DockStyle.Top;
+            Picture.SizeMode = PictureBoxSizeMode.Zoom;
+            Picture.Height = Panel.Width;
+            Picture.Dock = DockStyle.Top;
             string defaultImage = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
-            _picture.Image = Image.FromFile(defaultImage);
-            _panel.Controls.Add(_picture);
+            Picture.Image = Image.FromFile(defaultImage);
+            Panel.Controls.Add(Picture);
         }
 
         private void SetInfoParameters()
         {
             int indent = 5;
-            _info.Top = _picture.Height + indent;
-            _info.Left = indent;
-            _info.AutoSize = true;
-            _info.MaximumSize = new Size(_panel.Width - indent * 2, 0);
-            _info.Text = "book\nauthors\npublichingHouse";
-            _panel.Controls.Add(_info);
+            Info.Top = Picture.Height + indent;
+            Info.Left = indent;
+            Info.AutoSize = true;
+            Info.MaximumSize = new Size(Panel.Width - indent * 2, 0);
+            Info.Text = string.Empty;
+            Info.Anchor = AnchorStyles.Top;
+            Panel.Controls.Add(Info);
         }
 
         public virtual void SetBook(Book book)
         {
-            _picture.Image = Image.FromFile(book.ImagePath);
-            _info.Text = book.GetFullInfo();
-            _book = book;
+            Picture.Image = Image.FromFile(book.ImagePath);
+            Info.Text = book.GetFullInfo();
+            Book = book;
         }
     }
 }

@@ -12,7 +12,6 @@ namespace GetBooksProject.Controls
     {
         private Button _change;
         private Button _delete;
-        private int _buttonHeight;
         public delegate void ChangeBook(StorageBook book);
         private ChangeBook _changeBook;
 
@@ -20,26 +19,26 @@ namespace GetBooksProject.Controls
         {
             _change = new Button();
             _delete = new Button();
-            _buttonHeight = 30;
             SetParameters();
         }
 
         private void SetParameters()
         {
-            int indent = 2;
-            _delete.Height = _buttonHeight;
-            _delete.Top = _panel.Height - _delete.Height - indent;
-            _delete.Width = _panel.Width - indent;
+            _delete.Height = ButtonHeight;
+            _delete.Top = Panel.Height - _delete.Height - ButtonIndent;
+            _delete.Width = Panel.Width - ButtonIndent;
             _delete.Text = "Удалить";
-            _change.Height = _buttonHeight;
-            _change.Top = _panel.Height - _delete.Height - _change.Height - indent;
-            _change.Width = _panel.Width - indent;
+            _delete.Anchor = AnchorStyles.Bottom;
+            _change.Height = ButtonHeight;
+            _change.Top = _delete.Top - _change.Height - ButtonIndent;
+            _change.Width = Panel.Width - ButtonIndent;
             _change.Text = "Изменить";
+            _change.Anchor = AnchorStyles.Bottom;
             _change.MouseClick += ChangeButtonClick;
             _change.Visible = false;
             _delete.Visible = false;
-            _panel.Controls.Add(_delete);
-            _panel.Controls.Add(_change);
+            Panel.Controls.Add(_delete);
+            Panel.Controls.Add(_change);
         }
 
         public override void SetBook(Book book)
@@ -54,11 +53,11 @@ namespace GetBooksProject.Controls
             _changeBook = changeBook;
         }
 
-        private void ChangeButtonClick(object sendler, EventArgs e)
+        private void ChangeButtonClick(object sender, EventArgs e)
         {
             if (_changeBook != null)
             {
-                _changeBook.Invoke((StorageBook)_book);
+                _changeBook.Invoke((StorageBook)Book);
             }
         }
     }

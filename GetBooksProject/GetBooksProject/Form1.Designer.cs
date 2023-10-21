@@ -114,9 +114,9 @@ namespace GetBooksProject
             // findStorageBooksButton
             // 
             this.findStorageBooksButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.findStorageBooksButton.Location = new System.Drawing.Point(555, 2);
+            this.findStorageBooksButton.Location = new System.Drawing.Point(564, 2);
             this.findStorageBooksButton.Name = "findStorageBooksButton";
-            this.findStorageBooksButton.Size = new System.Drawing.Size(85, 23);
+            this.findStorageBooksButton.Size = new System.Drawing.Size(76, 23);
             this.findStorageBooksButton.TabIndex = 0;
             this.findStorageBooksButton.Text = "Найти";
             this.findStorageBooksButton.UseVisualStyleBackColor = true;
@@ -182,12 +182,13 @@ namespace GetBooksProject
             // findProductsBooksButton
             // 
             this.findProductsBooksButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.findProductsBooksButton.Location = new System.Drawing.Point(555, 2);
+            this.findProductsBooksButton.Location = new System.Drawing.Point(564, 2);
             this.findProductsBooksButton.Name = "findProductsBooksButton";
-            this.findProductsBooksButton.Size = new System.Drawing.Size(85, 23);
+            this.findProductsBooksButton.Size = new System.Drawing.Size(76, 23);
             this.findProductsBooksButton.TabIndex = 4;
             this.findProductsBooksButton.Text = "Найти";
             this.findProductsBooksButton.UseVisualStyleBackColor = true;
+            this.findProductsBooksButton.Click += new System.EventHandler(this.findProductsBooksButton_Click);
             // 
             // productBookPanel
             // 
