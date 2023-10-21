@@ -72,10 +72,16 @@ namespace GetBooksProject.Entity
 
         public virtual string GetFullInfo()
         {
-            StringBuilder info = new StringBuilder(GetShortInfo());
+            StringBuilder info = new StringBuilder();
+            info.AppendLine(Name);
 
-            info.AppendLine("\nИздательство: " + PublishingHouse);
-            info.Append(Year + "год");
+            foreach (string author in _authors)
+            {
+                info.AppendLine(author);
+            }
+
+            info.AppendLine("Издательство: " + PublishingHouse);
+            info.Append(Year + " год");
 
             return info.ToString();
         }

@@ -25,7 +25,7 @@ namespace GetBooksProject.Entity
         public override string GetFullInfo()
         {
             StringBuilder info = new StringBuilder(base.GetFullInfo());
-            info.Append("\n" + PriceMessage);
+            info.Append('\n' + PriceMessage);
             return info.ToString();
         }
     }
