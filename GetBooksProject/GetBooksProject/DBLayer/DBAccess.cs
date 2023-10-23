@@ -5,13 +5,15 @@ namespace GetBooksProject.DBLayer
 {
     class DBAccess
     {
-        private static string _connectionString = "Data Source=libraryDB.db; Mode=ReadOnly; FailMissing=True";
         private SQLiteConnection _connection;
 
         public DBAccess()
         {
             _connection = new SQLiteConnection();
-            _connection.ConnectionString = _connectionString;
+            string dbPath = XMLLayer.XMLPathReader.GetInstance().GetPath("libraryDB");
+            string openMode = "ReadOnly";
+            string connectionString = $"Data Source={dbPath}; Mode={openMode}; FailMissing=True";
+            _connection.ConnectionString = connectionString;
         }
 
         public SQLiteConnection GetConnection()

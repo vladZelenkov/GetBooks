@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pathes>
-	<defaultBookPicture>Pictures\defaultBookPicture.png</defaultBookPicture>
-	<refreshIcon>Icons\refresh.png</refreshIcon>
+	<defaultBookPicture>..\..\Pictures\defaultBookPicture.png</defaultBookPicture>
+	<refreshIcon>..\..\Icons\refresh.png</refreshIcon>
+	<libraryDB>..\..\libraryDB.db</libraryDB>
 </pathes>

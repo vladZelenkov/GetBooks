@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GetBooksProject.Controls;
+using GetBooksProject.DBLayer;
+using GetBooksProject.Entity;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using GetBooksProject.Controls;
-using GetBooksProject.DBLayer;
-using GetBooksProject.Entity;
 
 namespace GetBooksProject
 {
@@ -106,7 +106,7 @@ namespace GetBooksProject
                 foreach (StorageBook book in books)
                 {
                     BookSlab slab = new BookSlab(book, _storageBookPanel);
-                    productBooksFlowLayoutPanel.Controls.Add(slab);
+                    storageBooksFlowLayoutPanel.Controls.Add(slab);
                 }
             }
             catch (Exception ex)

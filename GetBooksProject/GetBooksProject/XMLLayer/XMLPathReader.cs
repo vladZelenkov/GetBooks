@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GetBooksProject.Properties;
+using System;
 using System.Xml;
 
 namespace GetBooksProject.XMLLayer
@@ -10,17 +7,15 @@ namespace GetBooksProject.XMLLayer
     class XMLPathReader
     {
         private XmlDocument _file;
-        private string _fileName;
         private static XMLPathReader _instance;
 
-        private XMLPathReader(string XMLFileName)
+        private XMLPathReader()
         {
             _file = new XmlDocument();
-            _fileName = XMLFileName;
 
             try
             {
-                _file.Load(_fileName);
+                _file.LoadXml(Resources.Pathes);
             }
             catch (XmlException)
             {
@@ -32,7 +27,7 @@ namespace GetBooksProject.XMLLayer
         {
             if (_instance == null)
             {
-                _instance = new XMLPathReader("Pathes.xml");
+                _instance = new XMLPathReader();
             }
 
             return _instance;
@@ -58,7 +53,7 @@ namespace GetBooksProject.XMLLayer
                 }
             }
 
-            throw new Exception($"{_fileName} не содержит тэга {tagName}");
+            throw new Exception($"Файл не содержит тэга {tagName}");
         }
     }
 }
