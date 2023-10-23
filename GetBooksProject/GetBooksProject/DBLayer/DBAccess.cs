@@ -14,7 +14,7 @@ namespace GetBooksProject.DBLayer
             _connection.ConnectionString = _connectionString;
         }
 
-        public SQLiteConnection GetConnect()
+        public SQLiteConnection GetConnection()
         {
             try
             {

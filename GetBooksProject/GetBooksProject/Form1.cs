@@ -101,7 +101,7 @@ namespace GetBooksProject
 
             try
             {
-                List<StorageBook> books = reader.GetBooks(access.GetConnect());
+                List<StorageBook> books = reader.GetBooks(access.GetConnection());
 
                 foreach (StorageBook book in books)
                 {

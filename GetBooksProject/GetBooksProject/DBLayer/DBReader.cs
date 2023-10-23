@@ -1,7 +1,6 @@
 ﻿using GetBooksProject.Entity;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SQLite;
 
 namespace GetBooksProject.DBLayer
@@ -18,29 +17,37 @@ namespace GetBooksProject.DBLayer
                 {
                     command.CommandText = @"select * from full_books_info";
                     SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
-                    DataRowCollection rows = table.Rows;
 
-                    foreach (DataRow row in rows)
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        int id = row.Field<int>("id");
-                        string author = row.Field<string>("author");
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                int id = reader.GetInt32(0);
+                                string author = reader.GetString(2);
 
-                        if (IsBookExist(id, books, out int index))
-                        {
-                            books[index].AddAuthor(author);
-                        }
-                        else
-                        {
-                            string name = row.Field<string>("name");
-                            string publishingHouse = row.Field<string>("publishing_house");
-                            int year = row.Field<int>("year");
+                                if (IsBookExist(id, books, out int index))
+                                {
+                                    books[index].AddAuthor(author);
+                                }
+                                else
+                                {
+                                    string name = reader.GetString(1);
+                                    string publishingHouse = reader.GetString(3);
+                                    int year = reader.GetInt32(4);
+                                    StorageBook book = new StorageBook(id, name);
+                                    book.AddAuthor(author);
+                                    book.PublishingHouse = publishingHouse;
+                                    book.Year = year;
+                                    books.Add(book);
+                                }
+                            }
                         }
                     }
-
-                    return books;
                 }
+
+                return books;
             }
             catch (InvalidOperationException)
             {
