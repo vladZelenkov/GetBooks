@@ -3,3 +3,4 @@ GetBooksProject/GetBooksProject/obj/Debug/GetBooksProject.csproj.AssemblyReferen
 GetBooksProject/GetBooksProject/obj/Debug/GetBooksProject.csproj.GenerateResource.cache
 *.suo
 *.cache
+*.pdb
