@@ -8,3 +8,12 @@ C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debu
 C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.csproj.CoreCompileInputs.cache
 C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.exe
 C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.pdb
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\EntityFramework.dll
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\System.Data.SQLite.dll
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\EntityFramework.xml
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\bin\Debug\System.Data.SQLite.xml
+C:\Users\MarySlav\source\repos\GetBooks\GetBooksProject\GetBooksProject\obj\Debug\GetBooksProject.csproj.CopyComplete

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GetBooksProject.Controls;
+using GetBooksProject.DBLayer;
 using GetBooksProject.Entity;
 
 namespace GetBooksProject
@@ -95,6 +91,30 @@ namespace GetBooksProject
         {
             tabControl1.SelectedTab = addChangeTabPage;
             _changePanel.SetBook(book);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            updateButton.MouseClick += Form1_Load;
+            DBAccess access = new DBAccess();
+            DBReader reader = new DBReader();
+
+            try
+            {
+                List<StorageBook> books = reader.GetBooks(access.GetConnect());
+
+                foreach (StorageBook book in books)
+                {
+                    BookSlab slab = new BookSlab(book, _storageBookPanel);
+                    productBooksFlowLayoutPanel.Controls.Add(slab);
+                }
+            }
+            catch (Exception ex)
+            {
+                SetMessage("Ошибка подключения к базе: " + ex.Message);
+            }
+
+            access.Disconnest();
         }
     }
 }

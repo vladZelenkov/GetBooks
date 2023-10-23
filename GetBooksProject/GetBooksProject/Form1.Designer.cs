@@ -250,6 +250,7 @@ namespace GetBooksProject
             this.MinimumSize = new System.Drawing.Size(600, 350);
             this.Name = "Form1";
             this.Text = "GetBooks";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.myBooksTabPage.ResumeLayout(false);
             this.myBooksTabPage.PerformLayout();
