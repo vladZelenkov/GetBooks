@@ -36,7 +36,7 @@ namespace GetBooksProject.DBLayer
         public List<StorageBook> GetBooksForYear(int year)
         {
             List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info " +
-                                                         $"where yaer = '{year}'");
+                                                         $"where year = '{year}'");
             return books;
         }
 

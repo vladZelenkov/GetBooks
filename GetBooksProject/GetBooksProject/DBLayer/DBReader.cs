@@ -8,11 +8,12 @@ namespace GetBooksProject.DBLayer
         protected object GetForCommand(string commandLine)
         {
             DBAccess access = new DBAccess();
-            SQLiteConnection connection = access.GetConnection();
             object result = null;
 
             try
             {
+                SQLiteConnection connection = access.GetConnection();
+
                 using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
                     command.CommandText = commandLine;
