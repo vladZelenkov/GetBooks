@@ -6,20 +6,24 @@ namespace GetBooksProject.Controls
 {
     abstract class FindGroup
     {
-        protected Button Find;
-        protected ComboBox Condition;
-        protected TextBox Request;
+        protected Button _find;
+        protected ComboBox _condition;
+        protected TextBox _request;
+        protected FlowLayoutPanel _slabDisplay;
+        protected BookPanel _bookDisplay;
         protected delegate void ButtonClick(object sender, EventArgs e);
-        protected Dictionary<string, ButtonClick> SearchOptions;
+        protected Dictionary<string, ButtonClick> _searchOptions;
 
-        public FindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox)
+        public FindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, FlowLayoutPanel slabDisplay, BookPanel bookDisplay)
         {
-            Find = findButton;
-            Condition = conditionBox;
-            Request = reuestBox;
-            SearchOptions = new Dictionary<string, ButtonClick>();
-            Find.MouseClick += findButtonClick;
-            Condition.DropDownStyle = ComboBoxStyle.DropDownList;
+            _find = findButton;
+            _condition = conditionBox;
+            _request = reuestBox;
+            _slabDisplay = slabDisplay;
+            _bookDisplay = bookDisplay;
+            _searchOptions = new Dictionary<string, ButtonClick>();
+            _find.MouseClick += findButtonClick;
+            _condition.DropDownStyle = ComboBoxStyle.DropDownList;
             SetOptions();
         }
 
@@ -27,13 +31,13 @@ namespace GetBooksProject.Controls
 
         private void findButtonClick(object sender, EventArgs e)
         {
-            if (Condition.SelectedItem != null)
+            if (_condition.SelectedItem != null)
             {
-                string currentItem = Condition.SelectedItem.ToString();
+                string currentItem = _condition.SelectedItem.ToString();
 
-                if (SearchOptions[currentItem] != null)
+                if (_searchOptions[currentItem] != null)
                 {
-                    SearchOptions[currentItem].Invoke(sender, e);
+                    _searchOptions[currentItem].Invoke(sender, e);
                 }
             }
         }

@@ -6,19 +6,21 @@ namespace GetBooksProject.Controls
 {
     class ProductFindGroup : FindGroup
     {
-        public ProductFindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox) : base(findButton, conditionBox, reuestBox) { }
+        public ProductFindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, FlowLayoutPanel display, BookPanel bookDisplay) :
+            base(findButton, conditionBox, reuestBox, display, bookDisplay)
+        { }
 
         protected override void SetOptions()
         {
-            SearchOptions.Add("Labirint", findOnLabirint);
-            Dictionary<string, ButtonClick>.KeyCollection keys = SearchOptions.Keys;
+            _searchOptions.Add("Labirint", findOnLabirint);
+            Dictionary<string, ButtonClick>.KeyCollection keys = _searchOptions.Keys;
 
             foreach (string key in keys)
             {
-                Condition.Items.Add(key);
+                _condition.Items.Add(key);
             }
 
-            Condition.SelectedIndex = 0;
+            _condition.SelectedIndex = 0;
         }
 
         private void findOnLabirint(object sender, EventArgs e)

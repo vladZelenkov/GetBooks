@@ -120,7 +120,6 @@ namespace GetBooksProject
             this.findStorageBooksButton.TabIndex = 0;
             this.findStorageBooksButton.Text = "Найти";
             this.findStorageBooksButton.UseVisualStyleBackColor = true;
-            this.findStorageBooksButton.Click += new System.EventHandler(this.addBookPanelButton_Click);
             // 
             // storageBookPanel
             // 

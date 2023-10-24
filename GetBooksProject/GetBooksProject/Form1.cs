@@ -26,22 +26,14 @@ namespace GetBooksProject
             _productBookPanel = new ProductBookPanel(productBookPanel);
             _productBookPanel.SetAddBook(AddBook);
             _changePanel = new ChangePanel(addChangeTabPage.Width / 2, addChangeTabPage.Width / 4);
-            _storageFindGroup = new StorageFindGroup(findStorageBooksButton, storageFindConditionsComboBox, findStorageBookTextBox);
-            _productFindGroup = new ProductFindGroup(findProductsBooksButton, websitesComboBox, findProductBookTextBox);
+            _storageFindGroup = new StorageFindGroup(findStorageBooksButton,
+                storageFindConditionsComboBox, findStorageBookTextBox,
+                storageBooksFlowLayoutPanel, _storageBookPanel);
+            _productFindGroup = new ProductFindGroup(findProductsBooksButton,
+                websitesComboBox, findProductBookTextBox,
+                productBooksFlowLayoutPanel, _productBookPanel);
+            updateButton.MouseClick += Form1_Load;
             addChangeTabPage.Controls.Add(_changePanel);
-        }
-
-        private void addBookPanelButton_Click(object sender, EventArgs e)
-        {
-            Book book = new StorageBook(1, "Сиротки");
-            book.AddAuthor("Мария Вой");
-            book.AddAuthor("Александр Пушкин");
-            book.PublishingHouse = "ООО Издательство \"Эксмо\"";
-            book.Year = 2022;
-            BookSlab bookPanel = new BookSlab(book, _storageBookPanel);
-            FlowLayoutPanel panel = storageBooksFlowLayoutPanel;
-            bookPanel.Size = new Size(panel.Width - panel.Margin.Left - SystemInformation.VerticalScrollBarWidth, 0);
-            storageBooksFlowLayoutPanel.Controls.Add(bookPanel);
         }
 
         private void findProductsBooksButton_Click(object sender, EventArgs e)
@@ -99,7 +91,7 @@ namespace GetBooksProject
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            updateButton.MouseClick += Form1_Load;
+            storageBooksFlowLayoutPanel.Controls.Clear();
 
             BookReader reader = new BookReader();
 
