@@ -96,12 +96,12 @@ namespace GetBooksProject
         private void Form1_Load(object sender, EventArgs e)
         {
             updateButton.MouseClick += Form1_Load;
-            DBAccess access = new DBAccess();
-            DBReader reader = new DBReader();
+
+            BookReader reader = new BookReader();
 
             try
             {
-                List<StorageBook> books = reader.GetBooks(access.GetConnection());
+                List<StorageBook> books = reader.GetAllBooks();
 
                 foreach (StorageBook book in books)
                 {
@@ -111,10 +111,8 @@ namespace GetBooksProject
             }
             catch (Exception ex)
             {
-                SetMessage("Ошибка подключения к базе: " + ex.Message);
+                SetMessage(ex.Message);
             }
-
-            access.Disconnest();
         }
     }
 }
