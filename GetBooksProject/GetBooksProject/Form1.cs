@@ -14,6 +14,8 @@ namespace GetBooksProject
         private StorageBookPanel _storageBookPanel;
         private ProductBookPanel _productBookPanel;
         private ChangePanel _changePanel;
+        private StorageFindGroup _storageFindGroup;
+        private ProductFindGroup _productFindGroup;
 
         public Form1()
         {
@@ -24,6 +26,8 @@ namespace GetBooksProject
             _productBookPanel = new ProductBookPanel(productBookPanel);
             _productBookPanel.SetAddBook(AddBook);
             _changePanel = new ChangePanel(addChangeTabPage.Width / 2, addChangeTabPage.Width / 4);
+            _storageFindGroup = new StorageFindGroup(findStorageBooksButton, storageFindConditionsComboBox, findStorageBookTextBox);
+            _productFindGroup = new ProductFindGroup(findProductsBooksButton, websitesComboBox, findProductBookTextBox);
             addChangeTabPage.Controls.Add(_changePanel);
         }
 

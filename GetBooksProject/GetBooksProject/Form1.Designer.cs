@@ -33,7 +33,7 @@ namespace GetBooksProject
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.myBooksTabPage = new System.Windows.Forms.TabPage();
             this.updateButton = new System.Windows.Forms.Button();
-            this.bookParametersComboBox = new System.Windows.Forms.ComboBox();
+            this.storageFindConditionsComboBox = new System.Windows.Forms.ComboBox();
             this.findStorageBookTextBox = new System.Windows.Forms.TextBox();
             this.findStorageBooksButton = new System.Windows.Forms.Button();
             this.storageBookPanel = new System.Windows.Forms.Panel();
@@ -70,7 +70,7 @@ namespace GetBooksProject
             // myBooksTabPage
             // 
             this.myBooksTabPage.Controls.Add(this.updateButton);
-            this.myBooksTabPage.Controls.Add(this.bookParametersComboBox);
+            this.myBooksTabPage.Controls.Add(this.storageFindConditionsComboBox);
             this.myBooksTabPage.Controls.Add(this.findStorageBookTextBox);
             this.myBooksTabPage.Controls.Add(this.findStorageBooksButton);
             this.myBooksTabPage.Controls.Add(this.storageBookPanel);
@@ -92,14 +92,14 @@ namespace GetBooksProject
             this.updateButton.TabIndex = 4;
             this.updateButton.UseVisualStyleBackColor = true;
             // 
-            // bookParametersComboBox
+            // storageFindConditionsComboBox
             // 
-            this.bookParametersComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bookParametersComboBox.FormattingEnabled = true;
-            this.bookParametersComboBox.Location = new System.Drawing.Point(440, 3);
-            this.bookParametersComboBox.Name = "bookParametersComboBox";
-            this.bookParametersComboBox.Size = new System.Drawing.Size(118, 21);
-            this.bookParametersComboBox.TabIndex = 3;
+            this.storageFindConditionsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.storageFindConditionsComboBox.FormattingEnabled = true;
+            this.storageFindConditionsComboBox.Location = new System.Drawing.Point(440, 3);
+            this.storageFindConditionsComboBox.Name = "storageFindConditionsComboBox";
+            this.storageFindConditionsComboBox.Size = new System.Drawing.Size(118, 21);
+            this.storageFindConditionsComboBox.TabIndex = 3;
             // 
             // findStorageBookTextBox
             // 
@@ -273,7 +273,7 @@ namespace GetBooksProject
         private System.Windows.Forms.Label informLable;
         private System.Windows.Forms.Panel storageBookPanel;
         private System.Windows.Forms.TextBox findStorageBookTextBox;
-        private System.Windows.Forms.ComboBox bookParametersComboBox;
+        private System.Windows.Forms.ComboBox storageFindConditionsComboBox;
         private System.Windows.Forms.ComboBox websitesComboBox;
         private System.Windows.Forms.TextBox findProductBookTextBox;
         private System.Windows.Forms.Button findProductsBooksButton;
