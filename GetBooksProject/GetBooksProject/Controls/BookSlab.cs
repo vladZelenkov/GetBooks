@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace GetBooksProject.Controls
@@ -47,11 +48,37 @@ namespace GetBooksProject.Controls
             _shortInfo.Left = _picture.Width + indent;
             _shortInfo.Top = indent;
             _shortInfo.AutoSize = true;
-            _shortInfo.Text = _book.GetShortInfo();
+            _shortInfo.Text = Format(_book.GetShortInfo());
             _shortInfo.MouseHover += slab_MouseHover;
             _shortInfo.MouseLeave += slab_MouseLeave;
             _shortInfo.MouseClick += slab_MouseClick;
             Controls.Add(_shortInfo);
+        }
+
+        private string Format(string infoMessage)
+        {
+            int length = 30;
+            char spliter = ' ';
+            StringBuilder result = new StringBuilder();
+            StringBuilder line = new StringBuilder();
+            string[] words = infoMessage.Split(spliter);
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (line.Length + words[i].Length > length)
+                {
+                    result.Append(line.ToString().Trim());
+                    result.Append('\n');
+                    line.Clear();
+                }
+
+                line.Append(words[i]);
+                line.Append(spliter);
+            }
+
+            result.Append(line.ToString().Trim());
+
+            return result.ToString();
         }
 
         private void SetPictureParameters()
