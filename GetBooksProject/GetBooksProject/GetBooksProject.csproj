@@ -84,6 +84,7 @@
     <Compile Include="DBLayer\BookReader.cs" />
     <Compile Include="DBLayer\DBAccess.cs" />
     <Compile Include="DBLayer\DBReader.cs" />
+    <Compile Include="DBLayer\PublishingHouseReader.cs" />
     <Compile Include="Entity\Book.cs" />
     <Compile Include="Entity\Library.cs" />
     <Compile Include="Entity\ProductBook.cs" />
