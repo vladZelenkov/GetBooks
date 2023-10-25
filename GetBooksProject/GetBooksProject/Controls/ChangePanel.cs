@@ -140,6 +140,14 @@ namespace GetBooksProject.Controls
             Controls.Add(_shiftPanel);
         }
 
+        public void SetPublishingHouses(List<string> houses)
+        {
+            foreach (string house in houses)
+            {
+                _publishingHouse.Items.Add(house);
+            }
+        }
+
         public void SetBook(Book book)
         {
             clearMouseClick(_clear, new EventArgs());

@@ -92,35 +92,67 @@ namespace GetBooksProject
         private void Form1_Load(object sender, EventArgs e)
         {
             storageBooksFlowLayoutPanel.Controls.Clear();
+            List<StorageBook> books = GetBooksFromDB();
 
-            BookReader bookReader = new BookReader();
+            foreach (StorageBook book in books)
+            {
+                BookSlab slab = new BookSlab(book, _storageBookPanel);
+                storageBooksFlowLayoutPanel.Controls.Add(slab);
+            }
+
+            _changePanel.SetAuthors(GetAuthorsFromDB());
+            _changePanel.SetPublishingHouses(GetPuplishingHousesFormDB());
+        }
+
+        private List<string> GetPuplishingHousesFormDB()
+        {
+            PublishingHouseReader reader = new PublishingHouseReader();
+            List<string> houses = new List<string>();
 
             try
             {
-                List<StorageBook> books = bookReader.GetAllBooks();
-
-                foreach (StorageBook book in books)
-                {
-                    BookSlab slab = new BookSlab(book, _storageBookPanel);
-                    storageBooksFlowLayoutPanel.Controls.Add(slab);
-                }
+                houses = reader.GetAllPublishingHouses();
             }
             catch (Exception ex)
             {
                 SetMessage(ex.Message);
             }
 
-            AuthorReader authorReader = new AuthorReader();
+            return houses;
+        }
+
+        private List<StorageBook> GetBooksFromDB()
+        {
+            BookReader reader = new BookReader();
+            List<StorageBook> books = new List<StorageBook>();
 
             try
             {
-                List<string> authors = authorReader.GetAllAuthors();
-                _changePanel.SetAuthors(authors);
+                books = reader.GetAllBooks();
             }
             catch (Exception ex)
             {
                 SetMessage(ex.Message);
             }
+
+            return books;
+        }
+
+        private List<string> GetAuthorsFromDB()
+        {
+            AuthorReader reader = new AuthorReader();
+            List<string> authors = new List<string>();
+
+            try
+            {
+                authors = reader.GetAllAuthors();
+            }
+            catch (Exception ex)
+            {
+                SetMessage(ex.Message);
+            }
+
+            return authors;
         }
     }
 }
