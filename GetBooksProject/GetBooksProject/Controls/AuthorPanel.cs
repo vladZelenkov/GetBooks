@@ -35,6 +35,9 @@ namespace GetBooksProject.Controls
             close.Width = close.Height;
             author.Left = _topElement.Left;
             author.Width = _topElement.Width;
+            object[] authorItems = new object[_topElement.Items.Count];
+            _topElement.Items.CopyTo(authorItems, 0);
+            author.Items.AddRange(authorItems);
             close.Left = author.Left - close.Width - indent;
             close.Text = "X";
             _authors.Add(author);

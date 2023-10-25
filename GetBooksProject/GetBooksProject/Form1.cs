@@ -93,17 +93,29 @@ namespace GetBooksProject
         {
             storageBooksFlowLayoutPanel.Controls.Clear();
 
-            BookReader reader = new BookReader();
+            BookReader bookReader = new BookReader();
 
             try
             {
-                List<StorageBook> books = reader.GetAllBooks();
+                List<StorageBook> books = bookReader.GetAllBooks();
 
                 foreach (StorageBook book in books)
                 {
                     BookSlab slab = new BookSlab(book, _storageBookPanel);
                     storageBooksFlowLayoutPanel.Controls.Add(slab);
                 }
+            }
+            catch (Exception ex)
+            {
+                SetMessage(ex.Message);
+            }
+
+            AuthorReader authorReader = new AuthorReader();
+
+            try
+            {
+                List<string> authors = authorReader.GetAllAuthors();
+                _changePanel.SetAuthors(authors);
             }
             catch (Exception ex)
             {

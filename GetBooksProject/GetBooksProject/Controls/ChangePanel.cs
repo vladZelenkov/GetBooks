@@ -1,5 +1,6 @@
 ﻿using GetBooksProject.Entity;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -179,6 +180,14 @@ namespace GetBooksProject.Controls
             catch (Exception)
             {
                 Form1.SetMessage("Не удалось загрузить изображение");
+            }
+        }
+
+        public void SetAuthors(List<string> authors)
+        {
+            foreach (string author in authors)
+            {
+                _author.Items.Add(author);
             }
         }
 
