@@ -13,6 +13,7 @@ namespace GetBooksProject.Controls
         private Label _shortInfo;
         private PictureBox _picture;
         private BookPanel _display;
+        private TransparentPanel _transparentPanel;
         private string _defailtPicturePath;
 
 
@@ -22,6 +23,7 @@ namespace GetBooksProject.Controls
             _display = display;
             _shortInfo = new Label();
             _picture = new PictureBox();
+            _transparentPanel = new TransparentPanel();
             _defailtPicturePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
             SetParameters();
         }
@@ -33,13 +35,24 @@ namespace GetBooksProject.Controls
             BackColor = Color.FromArgb(252, 252, 238);
             AutoSize = true;
             MinimumSize = new Size(290, 100);
-            MouseHover += slab_MouseHover;
-            MouseLeave += slab_MouseLeave;
-            MouseClick += slab_MouseClick;
 
             SetPictureParameters();
             SetInfoParameters();
             SetPicture(_defailtPicturePath);
+            ConfigureTransparentPanel();
+        }
+
+        private void ConfigureTransparentPanel()
+        {
+            _transparentPanel.Width = Width;
+            _transparentPanel.Height = Height;
+            _transparentPanel.Top = 0;
+            _transparentPanel.Left = 0;
+            _transparentPanel.MouseHover += slab_MouseHover;
+            _transparentPanel.MouseLeave += slab_MouseLeave;
+            _transparentPanel.MouseClick += slab_MouseClick;
+            Controls.Add(_transparentPanel);
+            _transparentPanel.BringToFront();
         }
 
         private void SetInfoParameters()
@@ -49,9 +62,6 @@ namespace GetBooksProject.Controls
             _shortInfo.Top = indent;
             _shortInfo.AutoSize = true;
             _shortInfo.Text = Format(_book.GetShortInfo());
-            _shortInfo.MouseHover += slab_MouseHover;
-            _shortInfo.MouseLeave += slab_MouseLeave;
-            _shortInfo.MouseClick += slab_MouseClick;
             Controls.Add(_shortInfo);
         }
 
@@ -85,9 +95,6 @@ namespace GetBooksProject.Controls
         {
             _picture.SizeMode = PictureBoxSizeMode.Zoom;
             _picture.Size = new Size(100, 100);
-            _picture.MouseHover += slab_MouseHover;
-            _picture.MouseLeave += slab_MouseLeave;
-            _picture.MouseClick += slab_MouseClick;
             Controls.Add(_picture);
         }
 

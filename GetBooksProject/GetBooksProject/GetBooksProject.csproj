@@ -80,6 +80,9 @@
     <Compile Include="Controls\ProductFindGroup.cs" />
     <Compile Include="Controls\StorageBookPanel.cs" />
     <Compile Include="Controls\StorageFindGroup.cs" />
+    <Compile Include="Controls\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DBLayer\AuthorReader.cs" />
     <Compile Include="DBLayer\BookReader.cs" />
     <Compile Include="DBLayer\DBAccess.cs" />
