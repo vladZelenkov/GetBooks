@@ -15,21 +15,21 @@ namespace GetBooksProject.DBLayer
         public List<StorageBook> GetBooksForName(string name)
         {
             List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info  " +
-                                                         $"where book like('%{name.Trim()}%')");
+                                                         $"where lower(book) like '%{name.Trim().ToLower()}%'");
             return books;
         }
 
         public List<StorageBook> GetBooksForAuthor(string author)
         {
             List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info " +
-                                                         $"where id in (select id from full_books_info where author like('%{author.Trim()}%'))");
+                                                         $"where id in (select id from full_books_info where lower(author) like('%{author.Trim().ToLower()}%'))");
             return books;
         }
 
         public List<StorageBook> GetBooksForPublishingHouse(string publishingHouse)
         {
             List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info " +
-                                                         $"where publishing_house like('%{publishingHouse.Trim()}%')");
+                                                         $"where lower(publishing_house) like('%{publishingHouse.Trim().ToLower()}%')");
             return books;
         }
 
