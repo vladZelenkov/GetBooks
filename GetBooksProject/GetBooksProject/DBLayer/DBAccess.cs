@@ -11,10 +11,12 @@ namespace GetBooksProject.DBLayer
         {
             _connection = new SQLiteConnection();
             string dbPath = XMLLayer.XMLPathReader.GetInstance().GetPath("libraryDB");
-            string openMode = "ReadWrite";
-            string connectionString = $"Data Source={dbPath}; Version=3; Mode={openMode}; FailMissing=True";
+            OpenMode = "ReadWriteCreate";
+            string connectionString = $"Data Source={dbPath}; Version=3; Mode={OpenMode}; FailMissing=True";
             _connection.ConnectionString = connectionString;
         }
+
+        public string OpenMode { get; set; }
 
         public SQLiteConnection GetConnection()
         {

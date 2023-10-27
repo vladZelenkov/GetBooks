@@ -8,6 +8,7 @@ namespace GetBooksProject.DBLayer
         protected bool Execute(string request)
         {
             DBAccess access = new DBAccess();
+            access.OpenMode = "ReadWrite";
             int affectedLines = 0;
 
             try

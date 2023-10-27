@@ -10,6 +10,7 @@ namespace GetBooksProject.DBLayer
         protected object Execute(GetResult getResult, string request)
         {
             DBAccess access = new DBAccess();
+            access.OpenMode = "ReadOnly";
             object result = null;
 
             try
