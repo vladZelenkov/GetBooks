@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="DBLayer\AuthorReader.cs" />
     <Compile Include="DBLayer\BookReader.cs" />
+    <Compile Include="DBLayer\BookWriter.cs" />
     <Compile Include="DBLayer\DBAccess.cs" />
     <Compile Include="DBLayer\DBReader.cs" />
     <Compile Include="DBLayer\LowerFunction.cs" />

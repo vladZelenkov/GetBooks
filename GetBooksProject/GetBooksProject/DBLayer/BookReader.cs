@@ -15,34 +15,34 @@ namespace GetBooksProject.DBLayer
 
         public List<StorageBook> GetAllBooks()
         {
-            List<StorageBook> books = (List<StorageBook>)GetForCommand("select * from full_books_info");
+            List<StorageBook> books = (List<StorageBook>)Execute("select * from full_books_info");
             return books;
         }
 
         public List<StorageBook> GetBooksForName(string name)
         {
-            List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info  " +
+            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info  " +
                                                          $"where lower(book) like '%{name.Trim().ToLower()}%'");
             return books;
         }
 
         public List<StorageBook> GetBooksForAuthor(string author)
         {
-            List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info " +
+            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info " +
                                                          $"where id in (select id from full_books_info where lower(author) like('%{author.Trim().ToLower()}%'))");
             return books;
         }
 
         public List<StorageBook> GetBooksForPublishingHouse(string publishingHouse)
         {
-            List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info " +
+            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info " +
                                                          $"where lower(publishing_house) like('%{publishingHouse.Trim().ToLower()}%')");
             return books;
         }
 
         public List<StorageBook> GetBooksForYear(int year)
         {
-            List<StorageBook> books = (List<StorageBook>)GetForCommand($"select * from full_books_info " +
+            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info " +
                                                          $"where year = '{year}'");
             return books;
         }

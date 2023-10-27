@@ -3,12 +3,12 @@ using System.Data.SQLite;
 
 namespace GetBooksProject.DBLayer
 {
-    abstract class DBReader
+    class DBWriter
     {
-        protected object Execute(string request)
+        protected bool Execute(string request)
         {
             DBAccess access = new DBAccess();
-            object result = null;
+            int affectedLines = 0;
 
             try
             {
@@ -17,19 +17,16 @@ namespace GetBooksProject.DBLayer
                 using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
                     command.CommandText = request;
-                    result = GetResult(command);
+                    affectedLines = command.ExecuteNonQuery();
                 }
-
-                access.Disconnest();
-                return result;
             }
             catch (Exception)
             {
                 access.Disconnest();
                 throw;
             }
-        }
 
-        protected abstract object GetResult(SQLiteCommand command);
+            return affectedLines != 0;
+        }
     }
 }

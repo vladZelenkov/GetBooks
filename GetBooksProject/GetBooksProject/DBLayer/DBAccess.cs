@@ -11,8 +11,8 @@ namespace GetBooksProject.DBLayer
         {
             _connection = new SQLiteConnection();
             string dbPath = XMLLayer.XMLPathReader.GetInstance().GetPath("libraryDB");
-            string openMode = "ReadOnly";
-            string connectionString = $"Data Source={dbPath}; Mode={openMode}; FailMissing=True";
+            string openMode = "ReadWrite";
+            string connectionString = $"Data Source={dbPath}; Version=3; Mode={openMode}; FailMissing=True";
             _connection.ConnectionString = connectionString;
         }
 

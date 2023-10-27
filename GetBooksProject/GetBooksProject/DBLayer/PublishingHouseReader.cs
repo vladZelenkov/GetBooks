@@ -7,7 +7,7 @@ namespace GetBooksProject.DBLayer
     {
         public List<string> GetAllPublishingHouses()
         {
-            List<string> houses = (List<string>)GetForCommand("select name from publishing_houses");
+            List<string> houses = (List<string>)Execute("select name from publishing_houses");
             return houses;
         }
 
