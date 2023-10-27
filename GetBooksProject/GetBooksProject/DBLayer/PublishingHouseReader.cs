@@ -7,12 +7,14 @@ namespace GetBooksProject.DBLayer
     {
         public List<string> GetAllPublishingHouses()
         {
-            List<string> houses = (List<string>)Execute("select name from publishing_houses");
+            string request = "select name from publishing_houses";
+            List<string> houses = (List<string>)Execute(GetPublishingHouses, request);
             return houses;
         }
 
-        protected override object GetResult(SQLiteCommand command)
+        private object GetPublishingHouses(SQLiteCommand command, string request)
         {
+            command.CommandText = request;
             List<string> houses = new List<string>();
 
             using (SQLiteDataReader reader = command.ExecuteReader())

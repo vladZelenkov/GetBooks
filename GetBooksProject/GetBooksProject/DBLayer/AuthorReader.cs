@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SQLite;
 
 namespace GetBooksProject.DBLayer
@@ -8,12 +7,14 @@ namespace GetBooksProject.DBLayer
     {
         public List<string> GetAllAuthors()
         {
-            List<string> authors = (List<string>)Execute("select name from authors");
+            string request = "select name from authors";
+            List<string> authors = (List<string>)Execute(GetAuthors, request);
             return authors;
         }
 
-        protected override object GetResult(SQLiteCommand command)
+        private object GetAuthors(SQLiteCommand command, string request)
         {
+            command.CommandText = request;
             List<string> authors = new List<string>();
 
             using (SQLiteDataReader reader = command.ExecuteReader())

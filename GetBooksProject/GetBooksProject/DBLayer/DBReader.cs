@@ -5,7 +5,9 @@ namespace GetBooksProject.DBLayer
 {
     abstract class DBReader
     {
-        protected object Execute(string request)
+        protected delegate object GetResult(SQLiteCommand command, string request);
+
+        protected object Execute(GetResult getResult, string request)
         {
             DBAccess access = new DBAccess();
             object result = null;
@@ -16,8 +18,10 @@ namespace GetBooksProject.DBLayer
 
                 using (SQLiteCommand command = new SQLiteCommand(connection))
                 {
-                    command.CommandText = request;
-                    result = GetResult(command);
+                    if (getResult != null)
+                    {
+                        result = getResult.Invoke(command, request);
+                    }
                 }
 
                 access.Disconnest();
@@ -29,7 +33,5 @@ namespace GetBooksProject.DBLayer
                 throw;
             }
         }
-
-        protected abstract object GetResult(SQLiteCommand command);
     }
 }

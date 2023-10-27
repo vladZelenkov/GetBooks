@@ -1,4 +1,5 @@
-﻿using System.Data.SQLite;
+﻿using System;
+using System.Data.SQLite;
 
 namespace GetBooksProject.DBLayer
 {
@@ -16,7 +17,7 @@ namespace GetBooksProject.DBLayer
         /// <returns>Строка в верхнем регистре</returns>
         public override object Invoke(object[] args)
         {
-            if (args.Length == 0 || args[0] == null) return null;
+            if (args.Length == 0 || args[0] == null || args[0] is DBNull) return null;
             return ((string)args[0]).ToUpper();
         }
     }

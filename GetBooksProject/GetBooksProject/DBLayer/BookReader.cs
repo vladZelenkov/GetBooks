@@ -15,40 +15,46 @@ namespace GetBooksProject.DBLayer
 
         public List<StorageBook> GetAllBooks()
         {
-            List<StorageBook> books = (List<StorageBook>)Execute("select * from full_books_info");
+            string request = "select * from full_books_info";
+            List<StorageBook> books = (List<StorageBook>)Execute(GetStorageBooks, request);
             return books;
         }
 
         public List<StorageBook> GetBooksForName(string name)
         {
-            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info  " +
-                                                         $"where lower(book) like '%{name.Trim().ToLower()}%'");
+            string request = $"select * from full_books_info  " +
+                             $"where lower(book) like '%{name.Trim().ToLower()}%'";
+            List<StorageBook> books = (List<StorageBook>)Execute(GetStorageBooks, request);
             return books;
         }
 
         public List<StorageBook> GetBooksForAuthor(string author)
         {
-            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info " +
-                                                         $"where id in (select id from full_books_info where lower(author) like('%{author.Trim().ToLower()}%'))");
+            string request = $"select * from full_books_info " +
+                             $"where id in (select id from full_books_info where lower(author) like('%{author.Trim().ToLower()}%'))";
+            List<StorageBook> books = (List<StorageBook>)Execute(GetStorageBooks, request);
             return books;
         }
 
         public List<StorageBook> GetBooksForPublishingHouse(string publishingHouse)
         {
-            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info " +
-                                                         $"where lower(publishing_house) like('%{publishingHouse.Trim().ToLower()}%')");
+            string request = $"select * from full_books_info " +
+                             $"where lower(publishing_house) like('%{publishingHouse.Trim().ToLower()}%')";
+            List<StorageBook> books = (List<StorageBook>)Execute(GetStorageBooks, request);
             return books;
         }
 
         public List<StorageBook> GetBooksForYear(int year)
         {
-            List<StorageBook> books = (List<StorageBook>)Execute($"select * from full_books_info " +
-                                                         $"where year = '{year}'");
+            string request = $"select * from full_books_info " +
+                             $"where year = '{year}'";
+            List<StorageBook> books = (List<StorageBook>)Execute(GetStorageBooks, request);
             return books;
         }
 
-        protected override object GetResult(SQLiteCommand command)
+        private object GetStorageBooks(SQLiteCommand command, string request)
         {
+            command.CommandText = request;
             List<StorageBook> books = new List<StorageBook>();
 
             using (SQLiteDataReader reader = command.ExecuteReader())
