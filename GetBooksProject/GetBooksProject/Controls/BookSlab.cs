@@ -95,6 +95,7 @@ namespace GetBooksProject.Controls
         {
             _picture.SizeMode = PictureBoxSizeMode.Zoom;
             _picture.Size = new Size(100, 100);
+            _picture.Image = Image.FromFile(_book.ImagePath);
             Controls.Add(_picture);
         }
 
