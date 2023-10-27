@@ -78,8 +78,15 @@ namespace GetBooksProject.Entity
                 info.AppendLine(author);
             }
 
-            info.AppendLine("Издательство: " + PublishingHouse);
-            info.Append(Year + " год");
+            if (PublishingHouse != string.Empty)
+            {
+                info.AppendLine("Издательство: " + PublishingHouse);
+            }
+
+            if (Year != 0)
+            {
+                info.Append(Year + " год");
+            }
 
             return info.ToString();
         }
@@ -89,13 +96,15 @@ namespace GetBooksProject.Entity
             StringBuilder info = new StringBuilder();
             info.AppendLine(Name);
 
-            foreach (string author in _authors)
+            for (int i = 0; i < _authors.Count; i++)
             {
-                info.Append(author);
-                info.Append(',');
-            }
+                info.Append(_authors[i]);
 
-            info.Remove(info.Length - 1, 1);
+                if (i != _authors.Count - 1)
+                {
+                    info.Append(", ");
+                }
+            }
 
             return info.ToString();
         }

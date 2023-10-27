@@ -6,6 +6,13 @@ namespace GetBooksProject.DBLayer
 {
     class BookReader : DBReader
     {
+        private string _defaultImagePath;
+
+        public BookReader()
+        {
+            _defaultImagePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
+        }
+
         public List<StorageBook> GetAllBooks()
         {
             List<StorageBook> books = (List<StorageBook>)GetForCommand("select * from full_books_info");
@@ -51,7 +58,12 @@ namespace GetBooksProject.DBLayer
                     while (reader.Read())
                     {
                         int id = reader.GetInt32(0);
-                        string author = reader.GetString(2);
+                        string author = string.Empty;
+
+                        if (reader.IsDBNull(2) == false)
+                        {
+                            author = reader.GetString(2);
+                        }
 
                         if (IsBookInList(id, books, out int index))
                         {
@@ -60,12 +72,35 @@ namespace GetBooksProject.DBLayer
                         else
                         {
                             string name = reader.GetString(1);
-                            string publishingHouse = reader.GetString(3);
-                            int year = reader.GetInt32(4);
+                            string publishingHouse = string.Empty;
+                            int year = 0;
+                            string image = _defaultImagePath;
+
+                            if (reader.IsDBNull(3) == false)
+                            {
+                                publishingHouse = reader.GetString(3);
+                            }
+
+                            if (reader.IsDBNull(4) == false)
+                            {
+                                year = reader.GetInt32(4);
+                            }
+
+                            if (reader.IsDBNull(5) == false)
+                            {
+                                image = reader.GetString(5);
+                            }
+
                             StorageBook book = new StorageBook(id, name);
-                            book.AddAuthor(author);
+
+                            if (author != string.Empty)
+                            {
+                                book.AddAuthor(author);
+                            }
+
                             book.PublishingHouse = publishingHouse;
                             book.Year = year;
+                            book.ImagePath = image;
                             books.Add(book);
                         }
                     }
