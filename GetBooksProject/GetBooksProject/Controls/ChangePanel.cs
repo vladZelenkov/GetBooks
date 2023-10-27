@@ -154,13 +154,18 @@ namespace GetBooksProject.Controls
             _book = book;
             _name.Text = _book.Name;
             _publishingHouse.Text = book.PublishingHouse;
-            _year.Text = book.Year.ToString();
+
+            if (book.Year != 0)
+            {
+                _year.Text = book.Year.ToString();
+            }
+
             _authors.SetAuthors(book.GetAuthors());
+            SetImage(book.ImagePath);
 
             switch (book)
             {
                 case StorageBook storageBook:
-                    SetImage(book.ImagePath);
                     _change.Text = "Изменить";
                     break;
 
