@@ -29,7 +29,7 @@ namespace GetBooksProject.DBLayer
             }
 
             int publishingHouseId = GetPublishingHouseId(book.PublishingHouse);
-            string request = $"insert into books(id,name,publishing_house_id,publishing_year,image_path)" +
+            string request = $"insert into books(id,name,publishing_house_id,publishing_year,image_path) " +
                              $"values({bookId},{book.Name},{publishingHouseId},{book.Year},{book.ImagePath})";
 
             if (Execute(request))
@@ -52,21 +52,21 @@ namespace GetBooksProject.DBLayer
 
         public bool AddAuthorship(int bookId, int authorId)
         {
-            string request = $"insert into authorship(book_id,author_id)" +
+            string request = $"insert into authorship(book_id,author_id) " +
                              $"values({bookId},{authorId})";
             return Execute(request);
         }
 
         public bool AddAuthor(string author)
         {
-            string request = $"insert into authors(name)" +
+            string request = $"insert into authors(name) " +
                              $"values('{author}')";
             return Execute(request);
         }
 
         public bool AddPublishingHouse(string house)
         {
-            string request = $"insert into publishing_houses(name)" +
+            string request = $"insert into publishing_houses(name) " +
                              $"values('{house}')";
             return Execute(request);
         }
