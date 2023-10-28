@@ -8,7 +8,8 @@ namespace GetBooksProject.DBLayer
     {
         public bool DeleteBook(int id)
         {
-            string request = $"delete from books where id = {id}";
+            string request = $"PRAGMA foreign_keys = ON; " +
+                             $"delete from books where id = {id}";
             return Execute(request);
         }
 
@@ -45,9 +46,10 @@ namespace GetBooksProject.DBLayer
             {
                 foreach (int authorId in authorsId)
                 {
-                    if (AddAuthorship(bookId, authorId) == false)
+                    if (AddAuthorship(bookId, book.Name, authorId) == false)
                     {
-                        throw new Exception("Не удалось добавить автора");
+                        DeleteBook(bookId);
+                        throw new Exception("Нельзя добавить одному автору 2 и более одинаковые книги");
                     }
                 }
 
@@ -98,10 +100,10 @@ namespace GetBooksProject.DBLayer
             return request;
         }
 
-        public bool AddAuthorship(int bookId, int authorId)
+        public bool AddAuthorship(int bookId, string bookName, int authorId)
         {
-            string request = $"insert into authorship(book_id,author_id) " +
-                             $"values({bookId},{authorId})";
+            string request = $"insert into authorship(book_id,book_name,author_id) " +
+                             $"values({bookId},'{bookName}',{authorId})";
             return Execute(request);
         }
 
