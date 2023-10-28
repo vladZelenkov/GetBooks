@@ -230,13 +230,35 @@ namespace GetBooksProject.Controls
         private void addBookMouseClick(object sender, EventArgs e)
         {
             string name = _name.Text;
+            string textYear = _year.Text;
+            int year = 0;
+            bool isDataCorrect = true;
 
-            if (name != "")
+            if (name == "")
+            {
+                isDataCorrect = false;
+                Form1.SetMessage("Неверный ввод: Заполните поле \"Название\"");
+            }
+
+            if (textYear != "")
+            {
+                if (int.TryParse(textYear, out int publishingYear))
+                {
+                    year = publishingYear;
+                }
+                else
+                {
+                    isDataCorrect = false;
+                    Form1.SetMessage("Неверный ввод: Неверное значение в поле \"Год издания\"");
+                }
+            }
+
+            if (isDataCorrect)
             {
                 Book book = new Book(name);
+                book.Year = year;
                 List<string> authors = _authors.GetAuthors();
                 string publishingHouse = _publishingHouse.Text;
-                string textYear = _year.Text;
                 string imagePath = _image.ImageLocation;
 
                 foreach (string author in authors)
@@ -249,13 +271,6 @@ namespace GetBooksProject.Controls
                     book.PublishingHouse = publishingHouse;
                 }
 
-                if (textYear != "")
-                {
-                    if (int.TryParse(textYear, out int year))
-                    {
-                        book.Year = year;
-                    }
-                }
 
                 if (imagePath != _defaultImagePath)
                 {
@@ -264,18 +279,21 @@ namespace GetBooksProject.Controls
 
                 BookWriter writer = new BookWriter();
 
-                if (writer.AddBook(book))
+                try
                 {
-                    Form1.SetMessage($"Успешно: Книга {book.Name} добавлена в библиотеку");
+                    if (writer.AddBook(book))
+                    {
+                        Form1.SetMessage($"Успешно: Книга {book.Name} добавлена в библиотеку");
+                    }
+                    else
+                    {
+                        Form1.SetMessage("Не удалось добавить книгу");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Form1.SetMessage("Не удалось добавить книгу");
+                    Form1.SetMessage(ex.Message);
                 }
-            }
-            else
-            {
-                Form1.SetMessage("Неверный ввод: Заполните поле \"Название\"");
             }
         }
 
