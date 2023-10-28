@@ -1,4 +1,5 @@
-﻿using GetBooksProject.Entity;
+﻿using GetBooksProject.DBLayer;
+using GetBooksProject.Entity;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -166,6 +167,7 @@ namespace GetBooksProject.Controls
             switch (book)
             {
                 case StorageBook storageBook:
+                    _change.MouseClick -= addBookMouseClick;
                     _change.Text = "Изменить";
                     break;
 
@@ -225,6 +227,52 @@ namespace GetBooksProject.Controls
 
         }
 
+        private void addBookMouseClick(object sender, EventArgs e)
+        {
+            string name = _name.Text;
+
+            if (name != "")
+            {
+                Book book = new Book(name);
+                List<string> authors = _authors.GetAuthors();
+                string publishingHouse = _publishingHouse.Text;
+                string textYear = _year.Text;
+
+                foreach (string author in authors)
+                {
+                    book.AddAuthor(author);
+                }
+
+                if (publishingHouse != "")
+                {
+                    book.PublishingHouse = publishingHouse;
+                }
+
+                if (textYear != "")
+                {
+                    if (int.TryParse(textYear, out int year))
+                    {
+                        book.Year = year;
+                    }
+                }
+
+                BookWriter writer = new BookWriter();
+
+                if (writer.AddBook(book))
+                {
+                    Form1.SetMessage($"Успешно: Книга {book.Name} добавлена в библиотеку");
+                }
+                else
+                {
+                    Form1.SetMessage("Не удалось добавить книгу");
+                }
+            }
+            else
+            {
+                Form1.SetMessage("Неверный ввод: Заполните поле \"Название\"");
+            }
+        }
+
         private void clearMouseClick(object sender, EventArgs e)
         {
             _authors.Clear();
@@ -235,6 +283,7 @@ namespace GetBooksProject.Controls
             _year.Text = string.Empty;
             SetImage(_defaultImagePath);
             _change.Text = "Добавить";
+            _change.MouseClick += addBookMouseClick;
         }
     }
 }

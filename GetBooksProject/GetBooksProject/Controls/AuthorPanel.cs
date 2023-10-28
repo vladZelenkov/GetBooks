@@ -93,6 +93,26 @@ namespace GetBooksProject.Controls
             }
         }
 
+        public List<string> GetAuthors()
+        {
+            List<string> authors = new List<string>();
+
+            if (_topElement.Text != "")
+            {
+                authors.Add(_topElement.Text);
+            }
+
+            foreach (ComboBox author in _authors)
+            {
+                if (author.Text != "")
+                {
+                    authors.Add(author.Text);
+                }
+            }
+
+            return authors;
+        }
+
         private void CloseButtonClick(object sendler, EventArgs e)
         {
             Button close = (Button)sendler;
