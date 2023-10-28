@@ -46,10 +46,14 @@ namespace GetBooksProject.DBLayer
             {
                 foreach (int authorId in authorsId)
                 {
-                    if (AddAuthorship(bookId, book.Name, authorId) == false)
+                    try
+                    {
+                        AddAuthorship(bookId, book.Name, authorId);
+                    }
+                    catch (Exception)
                     {
                         DeleteBook(bookId);
-                        throw new Exception("Нельзя добавить одному автору 2 и более одинаковые книги");
+                        throw new Exception("Нельзя добавить одному автору книги с одинаковым названием");
                     }
                 }
 
