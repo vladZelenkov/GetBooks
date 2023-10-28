@@ -92,6 +92,7 @@ namespace GetBooksProject
             {
                 SetMessage($"Книга {book.Name} удалена");
                 Update(this, new EventArgs());
+                _changePanel.Clear(book);
             }
             else
             {

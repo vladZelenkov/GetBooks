@@ -35,6 +35,8 @@ namespace GetBooksProject.Controls
             close.Width = close.Height;
             author.Left = _topElement.Left;
             author.Width = _topElement.Width;
+            author.IntegralHeight = _topElement.IntegralHeight;
+            author.MaxDropDownItems = _topElement.MaxDropDownItems;
             object[] authorItems = new object[_topElement.Items.Count];
             _topElement.Items.CopyTo(authorItems, 0);
             author.Items.AddRange(authorItems);

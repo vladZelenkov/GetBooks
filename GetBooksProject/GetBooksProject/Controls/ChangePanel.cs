@@ -23,6 +23,7 @@ namespace GetBooksProject.Controls
         private TextBox _year;
         private Book _book;
         private string _defaultImagePath;
+        private ChangeMode _currentChangeMode;
 
         public ChangePanel(int width, int left)
         {
@@ -68,6 +69,8 @@ namespace GetBooksProject.Controls
             _author.Top = _name.Bottom + indent;
             _author.Width = _name.Width;
             _author.Left = _name.Left;
+            _author.IntegralHeight = false;
+            _author.MaxDropDownItems = 8;
             //shiftPanel
             _shiftPanel.Top = _author.Bottom + indent;
             _shiftPanel.Width = Width;
@@ -93,6 +96,8 @@ namespace GetBooksProject.Controls
             _publishingHouse.Top = _addAuthor.Bottom + indent;
             _publishingHouse.Width = _name.Width;
             _publishingHouse.Left = _name.Left;
+            _publishingHouse.IntegralHeight = false;
+            _publishingHouse.MaxDropDownItems = 8;
             _shiftPanel.Controls.Add(_publishingHouse);
             //year
             Label yearLabel = new Label();
@@ -132,6 +137,9 @@ namespace GetBooksProject.Controls
             _change.Width = _clear.Width;
             _change.Left = Width - indent - _change.Width;
             _change.Height = buttonHeight;
+            _change.MouseClick += addBookMouseClick;
+            _change.Text = "Добавить";
+            _currentChangeMode = ChangeMode.Add;
             _shiftPanel.Controls.Add(_change);
 
             Controls.Add(nameLabel);
@@ -143,6 +151,8 @@ namespace GetBooksProject.Controls
 
         public void SetPublishingHouses(List<string> houses)
         {
+            _publishingHouse.Items.Clear();
+
             foreach (string house in houses)
             {
                 _publishingHouse.Items.Add(house);
@@ -167,11 +177,11 @@ namespace GetBooksProject.Controls
             switch (book)
             {
                 case StorageBook storageBook:
-                    _change.MouseClick -= addBookMouseClick;
-                    _change.Text = "Изменить";
+                    SwitchChangeMode(ChangeMode.Change);
                     break;
 
                 case ProductBook productBook:
+                    SwitchChangeMode(ChangeMode.Add);
                     break;
             }
         }
@@ -198,8 +208,33 @@ namespace GetBooksProject.Controls
             }
         }
 
+        private void SwitchChangeMode(ChangeMode mode)
+        {
+            if (_currentChangeMode != mode)
+            {
+                switch (mode)
+                {
+                    case ChangeMode.Add:
+                        _change.MouseClick -= changeBookMouseClick;
+                        _change.MouseClick += addBookMouseClick;
+                        _change.Text = "Добавить";
+                        _currentChangeMode = ChangeMode.Add;
+                        break;
+
+                    case ChangeMode.Change:
+                        _change.MouseClick -= addBookMouseClick;
+                        _change.MouseClick += changeBookMouseClick;
+                        _change.Text = "Изменить";
+                        _currentChangeMode = ChangeMode.Change;
+                        break;
+                }
+            }
+        }
+
         public void SetAuthors(List<string> authors)
         {
+            _author.Items.Clear();
+
             foreach (string author in authors)
             {
                 _author.Items.Add(author);
@@ -224,6 +259,11 @@ namespace GetBooksProject.Controls
             {
                 SetImage(_defaultImagePath);
             }
+
+        }
+
+        private void changeBookMouseClick(object sender, EventArgs e)
+        {
 
         }
 
@@ -297,6 +337,14 @@ namespace GetBooksProject.Controls
             }
         }
 
+        public void Clear(Book book)
+        {
+            if (book == _book)
+            {
+                clearMouseClick(_clear, new EventArgs());
+            }
+        }
+
         private void clearMouseClick(object sender, EventArgs e)
         {
             _authors.Clear();
@@ -306,8 +354,7 @@ namespace GetBooksProject.Controls
             _publishingHouse.Text = string.Empty;
             _year.Text = string.Empty;
             SetImage(_defaultImagePath);
-            _change.Text = "Добавить";
-            _change.MouseClick += addBookMouseClick;
+            SwitchChangeMode(ChangeMode.Add);
         }
     }
 }

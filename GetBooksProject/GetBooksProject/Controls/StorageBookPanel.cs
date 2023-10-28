@@ -17,6 +17,7 @@ namespace GetBooksProject.Controls
             _change = new Button();
             _delete = new Button();
             SetParameters();
+            Clear();
         }
 
         private void SetParameters()
@@ -32,8 +33,6 @@ namespace GetBooksProject.Controls
             _change.Text = "Изменить";
             _change.Anchor = AnchorStyles.Bottom;
             _change.MouseClick += ChangeButtonClick;
-            _change.Visible = false;
-            _delete.Visible = false;
             _delete.MouseClick += DeleteButtonClick;
             Panel.Controls.Add(_delete);
             Panel.Controls.Add(_change);
@@ -44,6 +43,13 @@ namespace GetBooksProject.Controls
             base.SetBook(book);
             _change.Visible = true;
             _delete.Visible = true;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            _change.Visible = false;
+            _delete.Visible = false;
         }
 
         public void SetChangeBook(ChangeBook changeBook)
@@ -69,6 +75,7 @@ namespace GetBooksProject.Controls
             if (_deleteBook != null)
             {
                 _deleteBook.Invoke((StorageBook)Book);
+                Clear();
             }
         }
     }

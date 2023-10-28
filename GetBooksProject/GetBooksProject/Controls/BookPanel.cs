@@ -34,8 +34,6 @@ namespace GetBooksProject.Controls
             Picture.SizeMode = PictureBoxSizeMode.Zoom;
             Picture.Height = Panel.Width;
             Picture.Dock = DockStyle.Top;
-            string defaultImage = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
-            Picture.Load(defaultImage);
             Panel.Controls.Add(Picture);
         }
 
@@ -56,6 +54,14 @@ namespace GetBooksProject.Controls
             Picture.Load(book.ImagePath);
             Info.Text = book.GetFullInfo();
             Book = book;
+        }
+
+        public virtual void Clear()
+        {
+            Info.Text = string.Empty;
+            string defaultImage = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
+            Picture.Load(defaultImage);
+            Book = null;
         }
     }
 }

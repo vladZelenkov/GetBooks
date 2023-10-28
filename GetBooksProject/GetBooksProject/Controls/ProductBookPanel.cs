@@ -16,6 +16,7 @@ namespace GetBooksProject.Controls
             _add = new Button();
             _visitSite = new Button();
             SetParameters();
+            Clear();
         }
 
         private void SetParameters()
@@ -25,14 +26,12 @@ namespace GetBooksProject.Controls
             _add.Text = "Добавить";
             _add.Top = Panel.Height - ButtonIndent - _add.Height;
             _add.Anchor = AnchorStyles.Bottom;
-            _add.Visible = false;
             _add.MouseClick += addBookMouseClick;
             _visitSite.Width = Panel.Width;
             _visitSite.Height = ButtonHeight;
             _visitSite.Text = "Перейти на сайт";
             _visitSite.Top = _add.Top - ButtonIndent - _visitSite.Height;
             _visitSite.Anchor = AnchorStyles.Bottom;
-            _visitSite.Visible = false;
             Panel.Controls.Add(_add);
             Panel.Controls.Add(_visitSite);
         }
@@ -42,6 +41,13 @@ namespace GetBooksProject.Controls
             base.SetBook(book);
             _add.Visible = true;
             _visitSite.Visible = true;
+        }
+
+        public override void Clear()
+        {
+            base.Clear();
+            _add.Visible = false;
+            _visitSite.Visible = false;
         }
 
         public void SetAddBook(AddBook addBook)
