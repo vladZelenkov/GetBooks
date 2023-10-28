@@ -12,6 +12,31 @@ namespace GetBooksProject.DBLayer
             return authors;
         }
 
+        public bool IsExist(string author, out int id)
+        {
+            string request = $"select id from authors" +
+                             $"where name = '{author}'";
+            id = (int)Execute(GetId, request);
+            return id != -1;
+        }
+
+        private object GetId(SQLiteCommand command, string request)
+        {
+            command.CommandText = request;
+            int id = -1;
+
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    id = reader.GetInt32(0);
+                }
+            }
+
+            return id;
+        }
+
         private object GetAuthors(SQLiteCommand command, string request)
         {
             command.CommandText = request;

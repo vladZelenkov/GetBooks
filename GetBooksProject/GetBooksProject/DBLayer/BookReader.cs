@@ -1,4 +1,5 @@
 ﻿using GetBooksProject.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 
@@ -50,6 +51,36 @@ namespace GetBooksProject.DBLayer
                              $"where year = '{year}'";
             List<StorageBook> books = (List<StorageBook>)Execute(GetStorageBooks, request);
             return books;
+        }
+
+        public int GetLastId()
+        {
+            string request = "select seq from sqlite_sequence where name=\"books\"";
+            int lastId = (int)Execute(GetLastId, request);
+
+            if (lastId == -1)
+            {
+                throw new Exception("Не удалось выполнить операцию: BookReader.GetLastId()");
+            }
+
+            return lastId;
+        }
+
+        private object GetLastId(SQLiteCommand command, string request)
+        {
+            command.CommandText = request;
+            int lastId = -1;
+
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    lastId = reader.GetInt32(0);
+                }
+            }
+
+            return lastId;
         }
 
         private object GetStorageBooks(SQLiteCommand command, string request)
