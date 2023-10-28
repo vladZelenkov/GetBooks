@@ -6,6 +6,12 @@ namespace GetBooksProject.DBLayer
 {
     class BookWriter : DBWriter
     {
+        public bool DeleteBook(int id)
+        {
+            string request = $"delete from books where id = {id}";
+            return Execute(request);
+        }
+
         public bool AddBook(Book book)
         {
             BookReader reader = new BookReader();
@@ -20,17 +26,20 @@ namespace GetBooksProject.DBLayer
                 throw ex;
             }
 
+            string request = GetBookRequest(book, bookId);
+
             List<int> authorsId = new List<int>();
             List<string> authors = book.GetAuthors();
 
             foreach (string author in authors)
             {
-                authorsId.Add(GetAuthorId(author));
-            }
+                int id = GetAuthorId(author);
 
-            int publishingHouseId = GetPublishingHouseId(book.PublishingHouse);
-            string request = $"insert into books(id,name,publishing_house_id,publishing_year,image_path) " +
-                             $"values({bookId},{book.Name},{publishingHouseId},{book.Year},{book.ImagePath})";
+                if (authorsId.Contains(id) == false)
+                {
+                    authorsId.Add(id);
+                }
+            }
 
             if (Execute(request))
             {
@@ -48,6 +57,45 @@ namespace GetBooksProject.DBLayer
             {
                 return false;
             }
+        }
+
+        private string GetBookRequest(Book book, int bookId)
+        {
+            string publishingHousePattern = string.Empty;
+            string publishingHouseValue = string.Empty;
+            string yearPattern = string.Empty;
+            string yearValue = string.Empty;
+            string imagePattern = string.Empty;
+            string imageValue = string.Empty;
+
+            if (book.PublishingHouse != string.Empty)
+            {
+                publishingHousePattern = ",publishing_house_id";
+                int publishingHouseId = GetPublishingHouseId(book.PublishingHouse);
+                publishingHouseValue = $",'{publishingHouseId}'";
+            }
+
+            if (book.Year != 0)
+            {
+                yearPattern = ",publishing_year";
+                yearValue = $",{book.Year}";
+            }
+
+            if (book.ImagePath != string.Empty)
+            {
+                imagePattern = ",image_path";
+                imageValue = $",'{book.ImagePath}'";
+            }
+
+            string requestInsert = "insert into books(id,name{0}{1}{2}) ";
+            string constantValues = "values({0},'{1}'";
+            string variableValues = "{0}{1}{2})";
+            requestInsert = string.Format(requestInsert, publishingHousePattern, yearPattern, imagePattern);
+            constantValues = string.Format(constantValues, bookId, book.Name);
+            variableValues = string.Format(variableValues, publishingHouseValue, yearValue, imageValue);
+            string request = requestInsert + constantValues + variableValues;
+
+            return request;
         }
 
         public bool AddAuthorship(int bookId, int authorId)

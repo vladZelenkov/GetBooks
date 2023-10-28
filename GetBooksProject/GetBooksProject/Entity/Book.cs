@@ -12,7 +12,7 @@ namespace GetBooksProject.Entity
         public Book(string name)
         {
             Name = name;
-            ImagePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
+            ImagePath = string.Empty;
             _authors = new List<string>();
             PublishingHouse = string.Empty;
             Year = 0;
