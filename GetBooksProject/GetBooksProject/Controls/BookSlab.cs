@@ -102,7 +102,7 @@ namespace GetBooksProject.Controls
         {
             try
             {
-                _picture.Image = Image.FromFile(path);
+                _picture.Load(path);
             }
             catch (FileNotFoundException)
             {

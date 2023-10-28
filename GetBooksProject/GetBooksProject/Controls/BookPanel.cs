@@ -53,7 +53,7 @@ namespace GetBooksProject.Controls
 
         public virtual void SetBook(Book book)
         {
-            Picture.Image = Image.FromFile(book.ImagePath);
+            Picture.Load(book.ImagePath);
             Info.Text = book.GetFullInfo();
             Book = book;
         }

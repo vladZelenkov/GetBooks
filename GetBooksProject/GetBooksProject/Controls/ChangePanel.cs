@@ -180,7 +180,7 @@ namespace GetBooksProject.Controls
         {
             try
             {
-                _image.Image = Image.FromFile(path);
+                _image.Load(path);
                 IsDefaultImage = path == _defaultImagePath;
 
                 if (IsDefaultImage)
@@ -237,6 +237,7 @@ namespace GetBooksProject.Controls
                 List<string> authors = _authors.GetAuthors();
                 string publishingHouse = _publishingHouse.Text;
                 string textYear = _year.Text;
+                string imagePath = _image.ImageLocation;
 
                 foreach (string author in authors)
                 {
@@ -254,6 +255,11 @@ namespace GetBooksProject.Controls
                     {
                         book.Year = year;
                     }
+                }
+
+                if (imagePath != _defaultImagePath)
+                {
+                    book.ImagePath = imagePath;
                 }
 
                 BookWriter writer = new BookWriter();
