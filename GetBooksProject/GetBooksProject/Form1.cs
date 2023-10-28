@@ -23,6 +23,7 @@ namespace GetBooksProject
             _infoLabel = informLable;
             _storageBookPanel = new StorageBookPanel(storageBookPanel);
             _storageBookPanel.SetChangeBook(ChangeBook);
+            _storageBookPanel.SetDeleteBook(DeleteBook);
             _productBookPanel = new ProductBookPanel(productBookPanel);
             _productBookPanel.SetAddBook(AddBook);
             _changePanel = new ChangePanel(addChangeTabPage.Width / 2, addChangeTabPage.Width / 4);
@@ -32,7 +33,7 @@ namespace GetBooksProject
             _productFindGroup = new ProductFindGroup(findProductsBooksButton,
                 websitesComboBox, findProductBookTextBox,
                 productBooksFlowLayoutPanel, _productBookPanel);
-            updateButton.MouseClick += Form1_Load;
+            updateButton.MouseClick += Update;
             addChangeTabPage.Controls.Add(_changePanel);
         }
 
@@ -83,6 +84,21 @@ namespace GetBooksProject
             _changePanel.SetBook(book);
         }
 
+        private void DeleteBook(StorageBook book)
+        {
+            BookWriter writer = new BookWriter();
+
+            if (writer.DeleteBook(book.Id))
+            {
+                SetMessage($"Книга {book.Name} удалена");
+                Update(this, new EventArgs());
+            }
+            else
+            {
+                SetMessage($"Ошибка при удалении книги {book.Name}");
+            }
+        }
+
         private void AddBook(ProductBook book)
         {
             tabControl1.SelectedTab = addChangeTabPage;
@@ -90,6 +106,11 @@ namespace GetBooksProject
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+            Update(sender, e);
+        }
+
+        private void Update(object sender, EventArgs e)
         {
             storageBooksFlowLayoutPanel.Controls.Clear();
             List<StorageBook> books = GetBooksFromDB();

@@ -10,6 +10,7 @@ namespace GetBooksProject.Controls
         private Button _delete;
         public delegate void ChangeBook(StorageBook book);
         private ChangeBook _changeBook;
+        private ChangeBook _deleteBook;
 
         public StorageBookPanel(Panel panel) : base(panel)
         {
@@ -33,6 +34,7 @@ namespace GetBooksProject.Controls
             _change.MouseClick += ChangeButtonClick;
             _change.Visible = false;
             _delete.Visible = false;
+            _delete.MouseClick += DeleteButtonClick;
             Panel.Controls.Add(_delete);
             Panel.Controls.Add(_change);
         }
@@ -49,11 +51,24 @@ namespace GetBooksProject.Controls
             _changeBook = changeBook;
         }
 
+        public void SetDeleteBook(ChangeBook deleteBook)
+        {
+            _deleteBook = deleteBook;
+        }
+
         private void ChangeButtonClick(object sender, EventArgs e)
         {
             if (_changeBook != null)
             {
                 _changeBook.Invoke((StorageBook)Book);
+            }
+        }
+
+        private void DeleteButtonClick(object sender, EventArgs e)
+        {
+            if (_deleteBook != null)
+            {
+                _deleteBook.Invoke((StorageBook)Book);
             }
         }
     }
