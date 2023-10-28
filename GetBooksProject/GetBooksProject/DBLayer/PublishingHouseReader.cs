@@ -14,7 +14,7 @@ namespace GetBooksProject.DBLayer
 
         public bool IsExist(string publishingHouse, out int id)
         {
-            string request = $"select id from publishing_houses" +
+            string request = $"select id from publishing_houses " +
                              $"where name = '{publishingHouse}'";
             id = (int)Execute(GetId, request);
             return id != -1;
