@@ -35,7 +35,7 @@ namespace GetBooksProject.Controls
             Picture.Height = Panel.Width;
             Picture.Dock = DockStyle.Top;
             string defaultImage = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
-            Picture.Image = Image.FromFile(defaultImage);
+            Picture.Load(defaultImage);
             Panel.Controls.Add(Picture);
         }
 
