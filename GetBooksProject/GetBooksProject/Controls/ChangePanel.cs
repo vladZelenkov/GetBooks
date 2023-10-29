@@ -307,6 +307,7 @@ namespace GetBooksProject.Controls
                 {
                     BookWriter writer = new BookWriter();
                     writer.ChangeBook(book);
+                    Form1.SetMessage("Изменения внесены");
                 }
                 catch (Exception ex)
                 {
@@ -364,11 +365,14 @@ namespace GetBooksProject.Controls
             }
         }
 
-        public void Clear(Book book)
+        public void Clear(StorageBook book)
         {
-            if (book == _book)
+            if (_book is StorageBook)
             {
-                clearMouseClick(_clear, new EventArgs());
+                if (book.Id == ((StorageBook)_book).Id)
+                {
+                    clearMouseClick(_clear, new EventArgs());
+                }
             }
         }
 

@@ -114,6 +114,7 @@ namespace GetBooksProject
         private void Update(object sender, EventArgs e)
         {
             storageBooksFlowLayoutPanel.Controls.Clear();
+            _storageBookPanel.Clear();
             List<StorageBook> books = GetBooksFromDB();
 
             foreach (StorageBook book in books)
