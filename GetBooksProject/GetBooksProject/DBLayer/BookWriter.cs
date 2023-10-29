@@ -23,7 +23,17 @@ namespace GetBooksProject.DBLayer
 
             if (book.PublishingHouse != string.Empty)
             {
-                publishingHouse = $"'{book.PublishingHouse}'";
+                try
+                {
+                    int publishingHouseId = GetPublishingHouseId(book.PublishingHouse);
+                    publishingHouse = $"{publishingHouseId}";
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
             }
 
             if (book.Year != 0)
@@ -37,10 +47,10 @@ namespace GetBooksProject.DBLayer
             }
 
             string bookRequest = $"update books " +
-                             $"set name = '{book.Name}' " +
-                             $"set publishing_house_id = {publishingHouse}, " +
+                             $"set name = '{book.Name}', " +
+                             $"publishing_house_id = {publishingHouse}, " +
                              $"publishing_year = {year}, " +
-                             $"image_path = {image}" +
+                             $"image_path = {image} " +
                              $"where id = {book.Id}";
 
             try
