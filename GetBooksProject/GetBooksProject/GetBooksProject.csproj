@@ -85,6 +85,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DBLayer\AuthorReader.cs" />
+    <Compile Include="DBLayer\AuthorshipReader.cs" />
     <Compile Include="DBLayer\BookReader.cs" />
     <Compile Include="DBLayer\BookWriter.cs" />
     <Compile Include="DBLayer\DBWriter.cs" />
