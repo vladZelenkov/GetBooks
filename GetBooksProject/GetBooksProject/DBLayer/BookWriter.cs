@@ -63,39 +63,25 @@ namespace GetBooksProject.DBLayer
             }
         }
 
-        private void DeleteExcessAuthorship(StorageBook book)
+        public bool AddAuthorship(int bookId, string bookName, int authorId)
         {
-            List<string> authors = book.GetAuthors();
-            List<int> authorsId = new List<int>();
+            string request = $"insert into authorship(book_id,book_name,author_id) " +
+                             $"values({bookId},'{bookName}',{authorId})";
+            return Execute(request);
+        }
 
-            foreach (string author in authors)
-            {
-                authorsId.Add(GetAuthorId(author));
-            }
+        public bool AddAuthor(string author)
+        {
+            string request = $"insert into authors(name) " +
+                             $"values('{author}')";
+            return Execute(request);
+        }
 
-            StringBuilder request = new StringBuilder($"delete from authorship " +
-                                                      $"where book_id = {book.Id} and author_id not in (");
-
-            for (int i = 0; i < authorsId.Count; i++)
-            {
-                request.Append(authorsId[i]);
-
-                if (i != authorsId.Count - 1)
-                {
-                    request.Append(',');
-                }
-            }
-
-            request.Append(")");
-
-            try
-            {
-                Execute(request.ToString());
-            }
-            catch (Exception)
-            {
-                throw new Exception("Не удалось удалить записи об авторстве");
-            }
+        public bool AddPublishingHouse(string house)
+        {
+            string request = $"insert into publishing_houses(name) " +
+                             $"values('{house}')";
+            return Execute(request);
         }
 
         public bool AddBook(Book book)
@@ -147,6 +133,41 @@ namespace GetBooksProject.DBLayer
             else
             {
                 return false;
+            }
+        }
+
+        private void DeleteExcessAuthorship(StorageBook book)
+        {
+            List<string> authors = book.GetAuthors();
+            List<int> authorsId = new List<int>();
+
+            foreach (string author in authors)
+            {
+                authorsId.Add(GetAuthorId(author));
+            }
+
+            StringBuilder request = new StringBuilder($"delete from authorship " +
+                                                      $"where book_id = {book.Id} and author_id not in (");
+
+            for (int i = 0; i < authorsId.Count; i++)
+            {
+                request.Append(authorsId[i]);
+
+                if (i != authorsId.Count - 1)
+                {
+                    request.Append(',');
+                }
+            }
+
+            request.Append(")");
+
+            try
+            {
+                Execute(request.ToString());
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не удалось удалить записи об авторстве");
             }
         }
 
@@ -225,27 +246,6 @@ namespace GetBooksProject.DBLayer
                     }
                 }
             }
-        }
-
-        public bool AddAuthorship(int bookId, string bookName, int authorId)
-        {
-            string request = $"insert into authorship(book_id,book_name,author_id) " +
-                             $"values({bookId},'{bookName}',{authorId})";
-            return Execute(request);
-        }
-
-        public bool AddAuthor(string author)
-        {
-            string request = $"insert into authors(name) " +
-                             $"values('{author}')";
-            return Execute(request);
-        }
-
-        public bool AddPublishingHouse(string house)
-        {
-            string request = $"insert into publishing_houses(name) " +
-                             $"values('{house}')";
-            return Execute(request);
         }
 
         private int GetAuthorId(string author)
