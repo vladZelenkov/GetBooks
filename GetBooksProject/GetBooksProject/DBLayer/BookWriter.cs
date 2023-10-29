@@ -1,6 +1,7 @@
 ﻿using GetBooksProject.Entity;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace GetBooksProject.DBLayer
 {
@@ -11,6 +12,89 @@ namespace GetBooksProject.DBLayer
             string request = $"PRAGMA foreign_keys = ON; " +
                              $"delete from books where id = {id}";
             return Execute(request);
+        }
+
+        public void ChangeBook(StorageBook book)
+        {
+            string publishingHouse = "null";
+            string year = "null";
+            string image = "null";
+            string defaultImage = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
+
+            if (book.PublishingHouse != string.Empty)
+            {
+                publishingHouse = $"'{book.PublishingHouse}'";
+            }
+
+            if (book.Year != 0)
+            {
+                year = $"{book.Year}";
+            }
+
+            if (book.ImagePath != defaultImage && book.ImagePath != string.Empty)
+            {
+                image = $"'{book.ImagePath}'";
+            }
+
+            string bookRequest = $"update books " +
+                             $"set name = '{book.Name}' " +
+                             $"set publishing_house_id = {publishingHouse}, " +
+                             $"publishing_year = {year}, " +
+                             $"image_path = {image}" +
+                             $"where id = {book.Id}";
+
+            try
+            {
+                Execute(bookRequest);
+
+                try
+                {
+                    DeleteAuthorship(book);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не удалось применить изменения");
+            }
+        }
+
+        private void DeleteAuthorship(StorageBook book)
+        {
+            List<string> authors = book.GetAuthors();
+            List<int> authorsId = new List<int>();
+
+            foreach (string author in authors)
+            {
+                authorsId.Add(GetAuthorId(author));
+            }
+
+            StringBuilder request = new StringBuilder($"delete from authorship " +
+                                                      $"where book_id = {book.Id} and author_id not in (");
+
+            for (int i = 0; i < authorsId.Count; i++)
+            {
+                request.Append(authorsId[i]);
+
+                if (i != authorsId.Count - 1)
+                {
+                    request.Append(',');
+                }
+            }
+
+            request.Append(")");
+
+            try
+            {
+                Execute(request.ToString());
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не удалось удалить записи об авторстве");
+            }
         }
 
         public bool AddBook(Book book)
