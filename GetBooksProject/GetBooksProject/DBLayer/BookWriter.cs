@@ -49,7 +49,8 @@ namespace GetBooksProject.DBLayer
 
                 try
                 {
-                    DeleteAuthorship(book);
+                    DeleteExcessAuthorship(book);
+                    AddAuthorship(book);
                 }
                 catch (Exception e)
                 {
@@ -62,7 +63,7 @@ namespace GetBooksProject.DBLayer
             }
         }
 
-        private void DeleteAuthorship(StorageBook book)
+        private void DeleteExcessAuthorship(StorageBook book)
         {
             List<string> authors = book.GetAuthors();
             List<int> authorsId = new List<int>();
@@ -186,6 +187,44 @@ namespace GetBooksProject.DBLayer
             string request = requestInsert + constantValues + variableValues;
 
             return request;
+        }
+
+        private void AddAuthorship(StorageBook book)
+        {
+            List<string> authors = book.GetAuthors();
+            List<int> newAuthorsId = new List<int>();
+
+            foreach (string author in authors)
+            {
+                newAuthorsId.Add(GetAuthorId(author));
+            }
+
+            AuthorshipReader reader = new AuthorshipReader();
+            List<int> currentAuthorsId;
+
+            try
+            {
+                currentAuthorsId = reader.GetAuthorsId(book.Id);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ошибка при получении списка авторов книги");
+            }
+
+            foreach (int id in newAuthorsId)
+            {
+                if (currentAuthorsId.Contains(id) == false)
+                {
+                    try
+                    {
+                        AddAuthorship(book.Id, book.Name, id);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Ошибка при добавлении автора");
+                    }
+                }
+            }
         }
 
         public bool AddAuthorship(int bookId, string bookName, int authorId)
