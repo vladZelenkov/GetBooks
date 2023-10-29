@@ -262,40 +262,67 @@ namespace GetBooksProject.Controls
 
         }
 
+        private bool IsDataCorrect()
+        {
+            string name = _name.Text;
+            string textYear = _year.Text;
+            bool isDataCorrect = true;
+
+            if (name == string.Empty)
+            {
+                isDataCorrect = false;
+                Form1.SetMessage("Неверный ввод: Заполните поле \"Название\"");
+
+                if (textYear != "")
+                {
+                    if (int.TryParse(textYear, out int publishingYear) == false)
+                    {
+                        isDataCorrect = false;
+                        Form1.SetMessage("Неверный ввод: Неверное значение в поле \"Год издания\"");
+                    }
+                }
+            }
+
+            return isDataCorrect;
+        }
+
         private void changeBookMouseClick(object sender, EventArgs e)
         {
+            if (IsDataCorrect())
+            {
+                string name = _name.Text;
+                StorageBook book = new StorageBook(((StorageBook)_book).Id, name);
+                book.PublishingHouse = _publishingHouse.Text;
+                int.TryParse(_year.Text, out int year);
+                book.Year = year;
+                book.ImagePath = _image.ImageLocation;
+                List<string> authors = _authors.GetAuthors();
 
+                foreach (string author in authors)
+                {
+                    book.AddAuthor(author);
+                }
+
+                try
+                {
+                    BookWriter writer = new BookWriter();
+                    writer.ChangeBook(book);
+                }
+                catch (Exception ex)
+                {
+                    Form1.SetMessage(ex.Message);
+                }
+            }
         }
 
         private void addBookMouseClick(object sender, EventArgs e)
         {
-            string name = _name.Text;
-            string textYear = _year.Text;
-            int year = 0;
-            bool isDataCorrect = true;
-
-            if (name == "")
+            if (IsDataCorrect())
             {
-                isDataCorrect = false;
-                Form1.SetMessage("Неверный ввод: Заполните поле \"Название\"");
-            }
-
-            if (textYear != "")
-            {
-                if (int.TryParse(textYear, out int publishingYear))
-                {
-                    year = publishingYear;
-                }
-                else
-                {
-                    isDataCorrect = false;
-                    Form1.SetMessage("Неверный ввод: Неверное значение в поле \"Год издания\"");
-                }
-            }
-
-            if (isDataCorrect)
-            {
+                string name = _name.Text;
+                string textYear = _year.Text;
                 Book book = new Book(name);
+                int.TryParse(textYear, out int year);
                 book.Year = year;
                 List<string> authors = _authors.GetAuthors();
                 string publishingHouse = _publishingHouse.Text;
