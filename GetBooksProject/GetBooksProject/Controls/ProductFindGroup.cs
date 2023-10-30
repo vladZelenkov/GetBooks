@@ -52,7 +52,8 @@ namespace GetBooksProject.Controls
             {
                 try
                 {
-                    List<ProductBook> books = parser.GetBooks(request);
+                    int pageCoutn = parser.GetPageCount(request);
+                    List<ProductBook> books = parser.GetBooks(1);
                     ShowResult(books);
                 }
                 catch (Exception ex)

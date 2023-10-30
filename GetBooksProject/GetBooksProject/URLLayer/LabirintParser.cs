@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace GetBooksProject.URLLayer
@@ -79,7 +78,7 @@ namespace GetBooksProject.URLLayer
         {
             text = text.Replace("&thinsp;", " ");
             text = text.Replace("&nbsp;", "");
-            text = text.Replace("в‚", "руб");
+            text = text.Replace("в‚", " руб");
             text = text.Replace("quot;", "\"");
             return text;
         }

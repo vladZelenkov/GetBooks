@@ -9,6 +9,8 @@ namespace GetBooksProject.URLLayer
 {
     abstract class Parser
     {
+        protected string _request = string.Empty;
+
         protected string WebSite { get; set; }
         protected string URLRequestPattern { get; set; }
         protected string PagePattern { get; set; }
@@ -17,76 +19,81 @@ namespace GetBooksProject.URLLayer
         /// <summary>
         /// Получает книги с определенного сайта по запросу
         /// </summary>
-        /// <param name="request">Поисковой запрос</param>
         /// <returns>Список книг, либо пустой список</returns>
-        public List<ProductBook> GetBooks(string request)
+        public List<ProductBook> GetBooks(int page)
         {
-            List<ProductBook> books = new List<ProductBook>();
-
-            using (WebClient client = new WebClient())
+            if (_request != string.Empty)
             {
-                try
-                {
-                    int page = GetPageCount(request);
-                    books.AddRange(GetBooksFromPage(request, 1));
+                List<ProductBook> books = new List<ProductBook>();
 
-                    for (int i = 2; i <= page; i++)
+                using (WebClient client = new WebClient())
+                {
+                    try
                     {
-                        books.AddRange(GetBooksFromPage(request, i));
+                        books.AddRange(GetBooksFromPage(_request, page));
                     }
+                    catch (WebException)
+                    {
+                        Form1.SetMessage("Ошибка соединения");
+                    }
+                    catch (Exception)
+                    {
+                        Form1.SetMessage("Необработанное исключение");
+                    }
+                }
 
-                }
-                catch (WebException)
+                if (books.Count == 0)
                 {
-                    Form1.SetMessage("Ошибка соединения");
+                    Form1.SetMessage("По данному запросу ничего не найдено");
                 }
-                catch (Exception)
-                {
-                    Form1.SetMessage("Необработанное исключение");
-                }
+
+                return books;
             }
-
-            if (books.Count == 0)
+            else
             {
-                Form1.SetMessage("По данному запросу ничего не найдено");
+                throw new Exception("Не установлен запрос");
             }
-
-            return books;
         }
 
         protected abstract List<ProductBook> GetBooksFromPage(string request, int pageNumber);
 
-        private int GetPageCount(string request)
+        public int GetPageCount(string request)
         {
-            string url = string.Format(URLRequestPattern, WebSite, request, "");
-
-            using (WebClient client = new WebClient())
+            if (request != string.Empty)
             {
-                try
-                {
-                    string htmlPage = client.DownloadString(url);
-                    Regex pageCountRegex = new Regex(PageCountRegexPattern);
-                    Match pageCountMatch = pageCountRegex.Match(htmlPage);
+                _request = request;
+                string url = string.Format(URLRequestPattern, WebSite, request, "");
 
-                    if (pageCountMatch.Groups.Count != 0)
+                using (WebClient client = new WebClient())
+                {
+                    try
                     {
-                        if (int.TryParse(pageCountMatch.Groups[1].Value, out int pageCount))
-                        {
-                            return pageCount;
-                        }
-                    }
+                        string htmlPage = client.DownloadString(url);
+                        Regex pageCountRegex = new Regex(PageCountRegexPattern);
+                        Match pageCountMatch = pageCountRegex.Match(htmlPage);
 
-                    return 1;
-                }
-                catch (WebException)
-                {
-                    throw;
-                }
-                catch (Exception)
-                {
-                    throw;
+                        if (pageCountMatch.Groups.Count != 0)
+                        {
+                            if (int.TryParse(pageCountMatch.Groups[1].Value, out int pageCount))
+                            {
+                                return pageCount;
+                            }
+                        }
+
+                        return 1;
+                    }
+                    catch (WebException)
+                    {
+                        throw;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
                 }
             }
+
+            return 0;
         }
 
         protected string Decoding(string sourceText)
