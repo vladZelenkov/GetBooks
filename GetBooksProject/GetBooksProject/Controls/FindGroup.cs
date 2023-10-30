@@ -9,18 +9,16 @@ namespace GetBooksProject.Controls
         protected Button _find;
         protected ComboBox _condition;
         protected TextBox _request;
-        protected FlowLayoutPanel _slabDisplay;
-        protected BookPanel _bookDisplay;
+        protected Panel _slabDisplay;
         protected delegate void ButtonClick(object sender, EventArgs e);
         protected Dictionary<string, ButtonClick> _searchOptions;
 
-        public FindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, FlowLayoutPanel slabDisplay, BookPanel bookDisplay)
+        public FindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, Panel slabDisplay)
         {
             _find = findButton;
             _condition = conditionBox;
             _request = reuestBox;
             _slabDisplay = slabDisplay;
-            _bookDisplay = bookDisplay;
             _searchOptions = new Dictionary<string, ButtonClick>();
             _find.MouseClick += findButtonClick;
             _condition.DropDownStyle = ComboBoxStyle.DropDownList;

@@ -14,7 +14,6 @@ namespace GetBooksProject.Controls
         private PictureBox _picture;
         private BookPanel _display;
         private TransparentPanel _transparentPanel;
-        private string _defailtPicturePath;
 
 
         public BookSlab(Book book, BookPanel display)
@@ -24,7 +23,6 @@ namespace GetBooksProject.Controls
             _shortInfo = new Label();
             _picture = new PictureBox();
             _transparentPanel = new TransparentPanel();
-            _defailtPicturePath = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
             SetParameters();
         }
 

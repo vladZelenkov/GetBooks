@@ -79,6 +79,9 @@
     <Compile Include="Controls\FindGroup.cs" />
     <Compile Include="Controls\ProductBookPanel.cs" />
     <Compile Include="Controls\ProductFindGroup.cs" />
+    <Compile Include="Controls\ShowProductPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\StorageBookPanel.cs" />
     <Compile Include="Controls\StorageFindGroup.cs" />
     <Compile Include="Controls\TransparentPanel.cs">

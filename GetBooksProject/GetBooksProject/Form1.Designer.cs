@@ -43,7 +43,6 @@ namespace GetBooksProject
             this.findProductBookTextBox = new System.Windows.Forms.TextBox();
             this.findProductsBooksButton = new System.Windows.Forms.Button();
             this.productBookPanel = new System.Windows.Forms.Panel();
-            this.productBooksFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.addChangeTabPage = new System.Windows.Forms.TabPage();
             this.informPanel = new System.Windows.Forms.Panel();
             this.informLable = new System.Windows.Forms.Label();
@@ -149,7 +148,6 @@ namespace GetBooksProject
             this.findBooksTabPage.Controls.Add(this.findProductBookTextBox);
             this.findBooksTabPage.Controls.Add(this.findProductsBooksButton);
             this.findBooksTabPage.Controls.Add(this.productBookPanel);
-            this.findBooksTabPage.Controls.Add(this.productBooksFlowLayoutPanel);
             this.findBooksTabPage.Location = new System.Drawing.Point(4, 22);
             this.findBooksTabPage.Name = "findBooksTabPage";
             this.findBooksTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -187,7 +185,6 @@ namespace GetBooksProject
             this.findProductsBooksButton.TabIndex = 4;
             this.findProductsBooksButton.Text = "Найти";
             this.findProductsBooksButton.UseVisualStyleBackColor = true;
-            this.findProductsBooksButton.Click += new System.EventHandler(this.findProductsBooksButton_Click);
             // 
             // productBookPanel
             // 
@@ -198,18 +195,6 @@ namespace GetBooksProject
             this.productBookPanel.Name = "productBookPanel";
             this.productBookPanel.Size = new System.Drawing.Size(245, 454);
             this.productBookPanel.TabIndex = 6;
-            // 
-            // productBooksFlowLayoutPanel
-            // 
-            this.productBooksFlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.productBooksFlowLayoutPanel.AutoScroll = true;
-            this.productBooksFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.productBooksFlowLayoutPanel.Location = new System.Drawing.Point(3, 29);
-            this.productBooksFlowLayoutPanel.Name = "productBooksFlowLayoutPanel";
-            this.productBooksFlowLayoutPanel.Size = new System.Drawing.Size(637, 428);
-            this.productBooksFlowLayoutPanel.TabIndex = 5;
             // 
             // addChangeTabPage
             // 
@@ -277,7 +262,6 @@ namespace GetBooksProject
         private System.Windows.Forms.TextBox findProductBookTextBox;
         private System.Windows.Forms.Button findProductsBooksButton;
         private System.Windows.Forms.Panel productBookPanel;
-        private System.Windows.Forms.FlowLayoutPanel productBooksFlowLayoutPanel;
         private System.Windows.Forms.TabPage addChangeTabPage;
         private System.Windows.Forms.Button updateButton;
     }

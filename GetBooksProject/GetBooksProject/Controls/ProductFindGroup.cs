@@ -1,5 +1,4 @@
-﻿using GetBooksProject.Entity;
-using GetBooksProject.URLLayer;
+﻿using GetBooksProject.URLLayer;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -8,8 +7,8 @@ namespace GetBooksProject.Controls
 {
     class ProductFindGroup : FindGroup
     {
-        public ProductFindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, FlowLayoutPanel display, BookPanel bookDisplay) :
-            base(findButton, conditionBox, reuestBox, display, bookDisplay)
+        public ProductFindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, ShowProductPanel display) :
+            base(findButton, conditionBox, reuestBox, display)
         { }
 
         protected override void SetOptions()
@@ -25,36 +24,16 @@ namespace GetBooksProject.Controls
             _condition.SelectedIndex = 0;
         }
 
-        private void ShowResult(List<ProductBook> books)
-        {
-            _slabDisplay.Controls.Clear();
-
-            if (books.Count != 0)
-            {
-                foreach (ProductBook book in books)
-                {
-                    _slabDisplay.Controls.Add(new BookSlab(book, _bookDisplay));
-                }
-            }
-            else
-            {
-                Form1.SetMessage("По вашему запросу ничего не найдено");
-            }
-        }
-
         private void findOnLabirint(object sender, EventArgs e)
         {
-            LabirintParser parser = new LabirintParser();
-
             string request = _request.Text;
 
             if (request != string.Empty)
             {
                 try
                 {
-                    int pageCoutn = parser.GetPageCount(request);
-                    List<ProductBook> books = parser.GetBooks(1);
-                    ShowResult(books);
+                    ShowProductPanel showDisplay = (ShowProductPanel)_slabDisplay;
+                    showDisplay.Find(new LabirintParser(), request);
                 }
                 catch (Exception ex)
                 {

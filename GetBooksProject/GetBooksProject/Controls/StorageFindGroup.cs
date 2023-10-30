@@ -8,10 +8,13 @@ namespace GetBooksProject.Controls
 {
     class StorageFindGroup : FindGroup
     {
+        private BookPanel _bookDisplay;
 
         public StorageFindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, FlowLayoutPanel display, BookPanel bookDisplay) :
-            base(findButton, conditionBox, reuestBox, display, bookDisplay)
-        { }
+            base(findButton, conditionBox, reuestBox, display)
+        {
+            _bookDisplay = bookDisplay;
+        }
 
         protected override void SetOptions()
         {

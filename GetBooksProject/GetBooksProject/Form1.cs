@@ -18,6 +18,7 @@ namespace GetBooksProject
         private ChangePanel _changePanel;
         private StorageFindGroup _storageFindGroup;
         private ProductFindGroup _productFindGroup;
+        private ShowProductPanel _showProductPanel;
 
         public Form1()
         {
@@ -33,25 +34,15 @@ namespace GetBooksProject
             _storageFindGroup = new StorageFindGroup(findStorageBooksButton,
                 storageFindConditionsComboBox, findStorageBookTextBox,
                 storageBooksFlowLayoutPanel, _storageBookPanel);
+            _showProductPanel = new ShowProductPanel(storageBooksFlowLayoutPanel.Top,
+                storageBooksFlowLayoutPanel.Left, storageBooksFlowLayoutPanel.Width,
+                storageBooksFlowLayoutPanel.Height, _productBookPanel);
             _productFindGroup = new ProductFindGroup(findProductsBooksButton,
                 websitesComboBox, findProductBookTextBox,
-                productBooksFlowLayoutPanel, _productBookPanel);
+                _showProductPanel);
             updateButton.MouseClick += Update;
+            findBooksTabPage.Controls.Add(_showProductPanel);
             addChangeTabPage.Controls.Add(_changePanel);
-        }
-
-        private void findProductsBooksButton_Click(object sender, EventArgs e)
-        {
-            ProductBook book = new ProductBook("Сиротки");
-            book.AddAuthor("Мария Вой");
-            book.AddAuthor("Александр Пушкин");
-            book.PriceMessage = "100 руб";
-            book.PublishingHouse = "ООО Издательство \"Эксмо\"";
-            book.Year = 2022;
-            BookSlab bookPanel = new BookSlab(book, _productBookPanel);
-            FlowLayoutPanel panel = storageBooksFlowLayoutPanel;
-            bookPanel.Size = new Size(panel.Width - panel.Margin.Left - SystemInformation.VerticalScrollBarWidth, 0);
-            productBooksFlowLayoutPanel.Controls.Add(bookPanel);
         }
 
         public static void SetMessage(string message)
