@@ -104,11 +104,11 @@ namespace GetBooksProject.Controls
             {
                 _picture.Load(path);
             }
-            catch (FileNotFoundException)
+            catch (Exception)
             {
                 try
                 {
-                    if (path != _defailtPicturePath && path != string.Empty)
+                    if (path != _defailtPicturePath)
                     {
                         _picture.Image = Image.FromFile(_defailtPicturePath);
                     }
@@ -121,10 +121,6 @@ namespace GetBooksProject.Controls
                 {
                     throw;
                 }
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
