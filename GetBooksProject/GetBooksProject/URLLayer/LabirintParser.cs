@@ -11,7 +11,8 @@ namespace GetBooksProject.URLLayer
     {
         public LabirintParser()
         {
-            URLRequestPattern = "https://www.labirint.ru/search/{0}/?stype=0{1}";
+            WebSite = "https://www.labirint.ru";
+            URLRequestPattern = "{0}/search/{1}/?stype=0{2}";
             PagePattern = "&page={0}";
             PageCountRegexPattern = @"var count_pages = (\d*)";
         }
@@ -21,7 +22,7 @@ namespace GetBooksProject.URLLayer
             List<ProductBook> books = new List<ProductBook>();
 
             string page = string.Format(PagePattern, pageNumber);
-            string url = string.Format(URLRequestPattern, request, page);
+            string url = string.Format(URLRequestPattern, WebSite, request, page);
 
             using (WebClient client = new WebClient())
             {
@@ -58,10 +59,13 @@ namespace GetBooksProject.URLLayer
                 Regex nameRegex = new Regex(namePattern);
                 Regex priceRegex = new Regex(pricePattern);
                 Regex authorRegex = new Regex(authorPattern);
-                ProductBook book = new ProductBook(nameRegex.Match(info).Groups[2].Value);
-                book.PriceMessage = priceRegex.Match(info).Groups[1].Value;
-                book.AddAuthor(authorRegex.Match(info).Groups[2].Value);
-                book.PriceMessage = nameRegex.Match(info).Groups[1].Value;
+                string name = nameRegex.Match(info).Groups[2].Value;
+                string author = authorRegex.Match(info).Groups[2].Value;
+                string price = priceRegex.Match(info).Groups[1].Value;
+                ProductBook book = new ProductBook(Format(Decoding(name)));
+                book.PriceMessage = Format(price);
+                book.AddAuthor(Decoding(author));
+                book.URL = nameRegex.Match(info).Groups[1].Value;
 
                 return book;
             }
@@ -69,6 +73,15 @@ namespace GetBooksProject.URLLayer
             {
                 throw;
             }
+        }
+
+        private string Format(string text)
+        {
+            text = text.Replace("&thinsp;", " ");
+            text = text.Replace("&nbsp;", "");
+            text = text.Replace("в‚", "руб");
+            text = text.Replace("quot;", "\"");
+            return text;
         }
     }
 }

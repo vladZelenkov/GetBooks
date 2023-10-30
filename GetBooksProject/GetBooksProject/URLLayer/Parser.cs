@@ -9,6 +9,7 @@ namespace GetBooksProject.URLLayer
 {
     abstract class Parser
     {
+        protected string WebSite { get; set; }
         protected string URLRequestPattern { get; set; }
         protected string PagePattern { get; set; }
         protected string PageCountRegexPattern { get; set; }
@@ -27,8 +28,9 @@ namespace GetBooksProject.URLLayer
                 try
                 {
                     int page = GetPageCount(request);
+                    books.AddRange(GetBooksFromPage(request, 1));
 
-                    for (int i = 1; i < page; i++)
+                    for (int i = 2; i <= page; i++)
                     {
                         books.AddRange(GetBooksFromPage(request, i));
                     }
@@ -56,7 +58,7 @@ namespace GetBooksProject.URLLayer
 
         private int GetPageCount(string request)
         {
-            string url = string.Format(URLRequestPattern, request, "");
+            string url = string.Format(URLRequestPattern, WebSite, request, "");
 
             using (WebClient client = new WebClient())
             {
