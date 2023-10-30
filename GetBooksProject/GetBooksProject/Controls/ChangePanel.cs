@@ -188,24 +188,18 @@ namespace GetBooksProject.Controls
 
         private void SetImage(string path)
         {
-            try
-            {
-                _image.Load(path);
-                IsDefaultImage = path == _defaultImagePath;
+            Form1.SetPicture(_image, path);
+            IsDefaultImage = path == _defaultImagePath || path == string.Empty;
 
-                if (IsDefaultImage)
-                {
-                    _setImage.Text = "Выбрать изображение";
-                }
-                else
-                {
-                    _setImage.Text = "Убрать изображение";
-                }
-            }
-            catch (Exception)
+            if (IsDefaultImage)
             {
-                Form1.SetMessage("Не удалось загрузить изображение");
+                _setImage.Text = "Выбрать изображение";
             }
+            else
+            {
+                _setImage.Text = "Убрать изображение";
+            }
+
         }
 
         private void SwitchChangeMode(ChangeMode mode)
