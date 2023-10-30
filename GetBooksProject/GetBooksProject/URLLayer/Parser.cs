@@ -57,6 +57,8 @@ namespace GetBooksProject.URLLayer
 
         protected abstract List<ProductBook> GetBooksFromPage(string request, int pageNumber);
 
+        protected abstract ProductBook GetBook(string url);
+
         public int GetPageCount(string request)
         {
             if (request != string.Empty)

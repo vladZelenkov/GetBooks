@@ -74,44 +74,6 @@ namespace GetBooksProject.URLLayer
             }
         }
 
-        public void GetFullInfo(ProductBook book)
-        {
-            string pHouseAndYear = @"data -event-label=""publisher""\s*data-event-content=""(.*)"">(.*)</a>,\s(\d*) г.";
-            string imagePattern = @"<div id=""product-image"">\s*.*\s*.*data-src=""(.*)""  height";
-            Regex pHousAndYearRegex = new Regex(pHouseAndYear);
-            Regex imageRegex = new Regex(imagePattern);
-
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    string htmlPage = client.DownloadString(book.URL);
-                    Match match = pHousAndYearRegex.Match(htmlPage);
-                    Match imageMatch = imageRegex.Match(htmlPage);
-
-                    if (match.Success)
-                    {
-                        book.PublishingHouse = match.Groups[1].Value;
-                        string yearText = match.Groups[3].Value;
-
-                        if (int.TryParse(yearText, out int year))
-                        {
-                            book.Year = year;
-                        }
-                    }
-
-                    if (imageMatch.Success)
-                    {
-                        book.ImagePath = imageMatch.Groups[1].Value;
-                    }
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Ошибка при получении данных о книге");
-                }
-            }
-        }
-
         private string Format(string text)
         {
             text = text.Replace("&thinsp;", " ");
@@ -119,6 +81,72 @@ namespace GetBooksProject.URLLayer
             text = text.Replace("в‚", " руб");
             text = text.Replace("quot;", "\"");
             return text;
+        }
+
+        protected override ProductBook GetBook(string url)
+        {
+            string name;
+            string publishingHouse;
+            string yearText;
+            string imagePath;
+            string author;
+            string namePattern = @"{""products"":.*name"":""(.*)"",""brand""";
+            string authorPattern = @"data-event-label=""author""\s*data-event-content=""(.*)""";
+            string pHouseAndYear = @"data -event-label=""publisher""\s*data-event-content=""(.*)"">(.*)</a>,\s(\d*) г.";
+            string imagePattern = @"<div id=""product-image"">\s*.*\s*.*data-src=""(.*)""  height";
+            string pricePattern = @"price"":(\d*)";
+            string totalPricePattern = @"""totalPrice"":(\d*)";
+            Regex nameRegex = new Regex(namePattern);
+            Regex authorRegex = new Regex(authorPattern);
+            Regex pHousAndYearRegex = new Regex(pHouseAndYear);
+            Regex imageRegex = new Regex(imagePattern);
+            Regex priceRegex = new Regex(pricePattern);
+            Regex totalPriceRegex = new Regex(totalPricePattern);
+
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    string htmlPage = client.DownloadString(url);
+                    Match pHouseMatch = pHousAndYearRegex.Match(htmlPage);
+                    Match imageMatch = imageRegex.Match(htmlPage);
+                    Match nameMatch = nameRegex.Match(htmlPage);
+                    Match authorMatch = authorRegex.Match(htmlPage);
+                    Match priceMatch = priceRegex.Match(htmlPage);
+                    Match totalPriceMatch = totalPriceRegex.Match(htmlPage);
+
+                    name = Decoding(nameMatch.Groups[1].Value);
+                    ProductBook book = new ProductBook(Format(name));
+
+                    author = Decoding(authorMatch.Groups[1].Value);
+                    book.AddAuthor(Format(author));
+
+                    publishingHouse = Decoding(pHouseMatch.Groups[1].Value);
+                    book.PublishingHouse = Format(publishingHouse);
+                    yearText = pHouseMatch.Groups[3].Value;
+
+                    if (int.TryParse(yearText, out int year))
+                    {
+                        book.Year = year;
+                    }
+
+                    book.PriceMessage = priceMatch.Groups[1].Value;
+
+                    if (totalPriceMatch.Success)
+                    {
+                        book.PriceMessage = totalPriceMatch.Groups[1].Value;
+                    }
+
+                    book.PriceMessage += " руб";
+                    imagePath = Decoding(imageMatch.Groups[1].Value);
+                    book.ImagePath = imagePath;
+                    return book;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Ошибка при получении данных о книге");
+                }
+            }
         }
     }
 }
