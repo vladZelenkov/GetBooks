@@ -108,7 +108,7 @@ namespace GetBooksProject.Controls
             {
                 try
                 {
-                    if (path != _defailtPicturePath)
+                    if (path != _defailtPicturePath && path != string.Empty)
                     {
                         _picture.Image = Image.FromFile(_defailtPicturePath);
                     }
