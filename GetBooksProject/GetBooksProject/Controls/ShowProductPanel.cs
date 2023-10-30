@@ -83,11 +83,18 @@ namespace GetBooksProject.Controls
 
                 for (int i = 0; i < slabs.Length; i++)
                 {
-                    slabs[i] = new BookSlab(books[i], _display);
+                    BookSlab slab = new BookSlab(books[i], _display);
+                    slab.MouseClick += GetFullInfo;
+                    slabs[i] = slab;
                 }
 
                 panel.Controls.AddRange(slabs);
             }
+        }
+
+        private void GetFullInfo(object sender, EventArgs e)
+        {
+
         }
     }
 }

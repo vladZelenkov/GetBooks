@@ -1,7 +1,6 @@
 ﻿using GetBooksProject.Entity;
 using System;
 using System.Drawing;
-using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -108,7 +107,7 @@ namespace GetBooksProject.Controls
             Cursor = Cursors.Default;
         }
 
-        private void slab_MouseClick(object sender, EventArgs e)
+        protected virtual void slab_MouseClick(object sender, EventArgs e)
         {
             _display.SetBook(_book);
         }
