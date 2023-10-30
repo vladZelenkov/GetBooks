@@ -64,13 +64,51 @@ namespace GetBooksProject.URLLayer
                 ProductBook book = new ProductBook(Format(Decoding(name)));
                 book.PriceMessage = Format(price);
                 book.AddAuthor(Decoding(author));
-                book.URL = nameRegex.Match(info).Groups[1].Value;
+                book.URL = WebSite + nameRegex.Match(info).Groups[1].Value;
 
                 return book;
             }
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        public void GetFullInfo(ProductBook book)
+        {
+            string pHouseAndYear = @"data -event-label=""publisher""\s*data-event-content=""(.*)"">(.*)</a>,\s(\d*) г.";
+            string imagePattern = @"<div id=""product-image"">\s*.*\s*.*data-src=""(.*)""  height";
+            Regex pHousAndYearRegex = new Regex(pHouseAndYear);
+            Regex imageRegex = new Regex(imagePattern);
+
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    string htmlPage = client.DownloadString(book.URL);
+                    Match match = pHousAndYearRegex.Match(htmlPage);
+                    Match imageMatch = imageRegex.Match(htmlPage);
+
+                    if (match.Success)
+                    {
+                        book.PublishingHouse = match.Groups[1].Value;
+                        string yearText = match.Groups[3].Value;
+
+                        if (int.TryParse(yearText, out int year))
+                        {
+                            book.Year = year;
+                        }
+                    }
+
+                    if (imageMatch.Success)
+                    {
+                        book.ImagePath = imageMatch.Groups[1].Value;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Ошибка при получении данных о книге");
+                }
             }
         }
 
