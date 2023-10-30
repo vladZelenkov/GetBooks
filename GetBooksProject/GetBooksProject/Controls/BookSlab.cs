@@ -94,34 +94,8 @@ namespace GetBooksProject.Controls
         {
             _picture.SizeMode = PictureBoxSizeMode.Zoom;
             _picture.Size = new Size(Height, Height);
-            SetPicture(_book.ImagePath);
+            Form1.SetPicture(_picture, _book.ImagePath);
             Controls.Add(_picture);
-        }
-
-        public void SetPicture(string path)
-        {
-            try
-            {
-                _picture.Load(path);
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    if (path != _defailtPicturePath)
-                    {
-                        _picture.Image = Image.FromFile(_defailtPicturePath);
-                    }
-                    else
-                    {
-                        Form1.SetMessage($"Изображение {path} не найдено");
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
         }
 
         private void slab_MouseHover(object sender, EventArgs e)

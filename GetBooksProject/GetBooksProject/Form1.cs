@@ -1,6 +1,7 @@
 ﻿using GetBooksProject.Controls;
 using GetBooksProject.DBLayer;
 using GetBooksProject.Entity;
+using GetBooksProject.XMLLayer;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,6 +12,7 @@ namespace GetBooksProject
     public partial class Form1 : Form
     {
         private static Label _infoLabel;
+        private static string _defailtPicturePath;
         private StorageBookPanel _storageBookPanel;
         private ProductBookPanel _productBookPanel;
         private ChangePanel _changePanel;
@@ -21,6 +23,7 @@ namespace GetBooksProject
         {
             InitializeComponent();
             _infoLabel = informLable;
+            _defailtPicturePath = XMLPathReader.GetInstance().GetPath("defaultBookPicture");
             _storageBookPanel = new StorageBookPanel(storageBookPanel);
             _storageBookPanel.SetChangeBook(ChangeBook);
             _storageBookPanel.SetDeleteBook(DeleteBook);
@@ -54,6 +57,32 @@ namespace GetBooksProject
         public static void SetMessage(string message)
         {
             _infoLabel.Text = message;
+        }
+
+        public static void SetPicture(PictureBox picture, string path)
+        {
+            try
+            {
+                picture.Load(path);
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    if (path != _defailtPicturePath)
+                    {
+                        picture.Image = Image.FromFile(_defailtPicturePath);
+                    }
+                    else
+                    {
+                        SetMessage($"Изображение {path} не найдено");
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         private void yearTextBox_Leave(object sender, EventArgs e)
