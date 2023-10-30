@@ -18,9 +18,9 @@ namespace GetBooksProject.URLLayer
         /// </summary>
         /// <param name="request">Поисковой запрос</param>
         /// <returns>Список книг, либо пустой список</returns>
-        public List<Book> GetBooks(string request)
+        public List<ProductBook> GetBooks(string request)
         {
-            List<Book> books = new List<Book>();
+            List<ProductBook> books = new List<ProductBook>();
 
             using (WebClient client = new WebClient())
             {
@@ -52,7 +52,7 @@ namespace GetBooksProject.URLLayer
             return books;
         }
 
-        protected abstract List<Book> GetBooksFromPage(string request, int pageNumber);
+        protected abstract List<ProductBook> GetBooksFromPage(string request, int pageNumber);
 
         private int GetPageCount(string request)
         {

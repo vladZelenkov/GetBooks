@@ -11,6 +11,8 @@ namespace GetBooksProject.Entity
 
         public string PriceMessage { get; set; }
 
+        public string URL { get; set; }
+
         public override string GetShortInfo()
         {
             StringBuilder info = new StringBuilder(base.GetShortInfo());
