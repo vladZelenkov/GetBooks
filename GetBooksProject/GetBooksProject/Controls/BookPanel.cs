@@ -1,4 +1,5 @@
 ﻿using GetBooksProject.Entity;
+using GetBooksProject.XMLLayer;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -51,7 +52,7 @@ namespace GetBooksProject.Controls
 
         public virtual void SetBook(Book book)
         {
-            Picture.Load(book.ImagePath);
+            Form1.SetPicture(Picture, book.ImagePath);
             Info.Text = book.GetFullInfo();
             Book = book;
         }
@@ -59,7 +60,7 @@ namespace GetBooksProject.Controls
         public virtual void Clear()
         {
             Info.Text = string.Empty;
-            string defaultImage = XMLLayer.XMLPathReader.GetInstance().GetPath("defaultBookPicture");
+            string defaultImage = XMLPathReader.GetInstance().GetPath("defaultBookPicture");
             Picture.Load(defaultImage);
             Book = null;
         }
