@@ -7,6 +7,8 @@ namespace GetBooksProject.Controls
 {
     class ProductFindGroup : FindGroup
     {
+        public static Parser CurrentParser;
+
         public ProductFindGroup(Button findButton, ComboBox conditionBox, TextBox reuestBox, ShowProductPanel display) :
             base(findButton, conditionBox, reuestBox, display)
         { }
@@ -33,7 +35,9 @@ namespace GetBooksProject.Controls
                 try
                 {
                     ShowProductPanel showDisplay = (ShowProductPanel)_slabDisplay;
-                    showDisplay.Find(new LabirintParser(), request);
+                    LabirintParser parser = new LabirintParser();
+                    showDisplay.Find(parser, request);
+                    CurrentParser = parser;
                 }
                 catch (Exception ex)
                 {

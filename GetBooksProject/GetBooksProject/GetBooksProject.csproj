@@ -78,6 +78,9 @@
     <Compile Include="Controls\ChangeMode.cs" />
     <Compile Include="Controls\FindGroup.cs" />
     <Compile Include="Controls\ProductBookPanel.cs" />
+    <Compile Include="Controls\ProductBookSlab.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ProductFindGroup.cs" />
     <Compile Include="Controls\ShowProductPanel.cs">
       <SubType>Component</SubType>

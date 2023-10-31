@@ -57,7 +57,7 @@ namespace GetBooksProject.URLLayer
 
         protected abstract List<ProductBook> GetBooksFromPage(string request, int pageNumber);
 
-        protected abstract ProductBook GetBook(string url);
+        public abstract ProductBook GetBook(string url);
 
         public int GetPageCount(string request)
         {
@@ -98,7 +98,7 @@ namespace GetBooksProject.URLLayer
             return 0;
         }
 
-        protected string Decoding(string sourceText)
+        protected string DecodingUTF8(string sourceText)
         {
             Encoding utf8 = Encoding.Default;
             byte[] bText = utf8.GetBytes(sourceText);

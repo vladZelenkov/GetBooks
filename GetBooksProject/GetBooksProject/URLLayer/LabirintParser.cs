@@ -61,9 +61,9 @@ namespace GetBooksProject.URLLayer
                 string name = nameRegex.Match(info).Groups[2].Value;
                 string author = authorRegex.Match(info).Groups[2].Value;
                 string price = priceRegex.Match(info).Groups[1].Value;
-                ProductBook book = new ProductBook(Format(Decoding(name)));
+                ProductBook book = new ProductBook(Format(DecodingUTF8(name)));
                 book.PriceMessage = Format(price);
-                book.AddAuthor(Decoding(author));
+                book.AddAuthor(DecodingUTF8(author));
                 book.URL = WebSite + nameRegex.Match(info).Groups[1].Value;
 
                 return book;
@@ -83,22 +83,19 @@ namespace GetBooksProject.URLLayer
             return text;
         }
 
-        protected override ProductBook GetBook(string url)
+        public override ProductBook GetBook(string url)
         {
-            string name;
-            string publishingHouse;
-            string yearText;
-            string imagePath;
-            string author;
-            string namePattern = @"{""products"":.*name"":""(.*)"",""brand""";
+            string namePattern = @"og:title"" content=""(.*)""";
             string authorPattern = @"data-event-label=""author""\s*data-event-content=""(.*)""";
-            string pHouseAndYear = @"data -event-label=""publisher""\s*data-event-content=""(.*)"">(.*)</a>,\s(\d*) г.";
+            string pubHousePattern = @"data-event-label=""publisher"" data-event-content=""(.*)"">(.*)</a>,";
+            string yearPattern = @"data-event-label=""publisher"" data-event-content=""(.*)"">(.*)</a>, (\d*) ";
             string imagePattern = @"<div id=""product-image"">\s*.*\s*.*data-src=""(.*)""  height";
             string pricePattern = @"price"":(\d*)";
             string totalPricePattern = @"""totalPrice"":(\d*)";
             Regex nameRegex = new Regex(namePattern);
             Regex authorRegex = new Regex(authorPattern);
-            Regex pHousAndYearRegex = new Regex(pHouseAndYear);
+            Regex pubHousRegex = new Regex(pubHousePattern);
+            Regex yearRegex = new Regex(yearPattern);
             Regex imageRegex = new Regex(imagePattern);
             Regex priceRegex = new Regex(pricePattern);
             Regex totalPriceRegex = new Regex(totalPricePattern);
@@ -108,22 +105,23 @@ namespace GetBooksProject.URLLayer
                 try
                 {
                     string htmlPage = client.DownloadString(url);
-                    Match pHouseMatch = pHousAndYearRegex.Match(htmlPage);
+                    Match pubHouseMatch = pubHousRegex.Match(htmlPage);
                     Match imageMatch = imageRegex.Match(htmlPage);
                     Match nameMatch = nameRegex.Match(htmlPage);
                     Match authorMatch = authorRegex.Match(htmlPage);
                     Match priceMatch = priceRegex.Match(htmlPage);
                     Match totalPriceMatch = totalPriceRegex.Match(htmlPage);
+                    Match yearMatch = yearRegex.Match(htmlPage);
 
-                    name = Decoding(nameMatch.Groups[1].Value);
+                    string name = DecodingUTF8(nameMatch.Groups[1].Value);
                     ProductBook book = new ProductBook(Format(name));
 
-                    author = Decoding(authorMatch.Groups[1].Value);
+                    string author = DecodingUTF8(authorMatch.Groups[1].Value);
                     book.AddAuthor(Format(author));
 
-                    publishingHouse = Decoding(pHouseMatch.Groups[1].Value);
+                    string publishingHouse = DecodingUTF8(pubHouseMatch.Groups[1].Value);
                     book.PublishingHouse = Format(publishingHouse);
-                    yearText = pHouseMatch.Groups[3].Value;
+                    string yearText = yearMatch.Groups[3].Value;
 
                     if (int.TryParse(yearText, out int year))
                     {
@@ -138,7 +136,7 @@ namespace GetBooksProject.URLLayer
                     }
 
                     book.PriceMessage += " руб";
-                    imagePath = Decoding(imageMatch.Groups[1].Value);
+                    string imagePath = DecodingUTF8(imageMatch.Groups[1].Value);
                     book.ImagePath = imagePath;
                     return book;
                 }

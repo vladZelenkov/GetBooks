@@ -83,7 +83,7 @@ namespace GetBooksProject.Controls
 
                 for (int i = 0; i < slabs.Length; i++)
                 {
-                    BookSlab slab = new BookSlab(books[i], _display);
+                    BookSlab slab = new ProductBookSlab(books[i], _display);
                     slab.MouseClick += GetFullInfo;
                     slabs[i] = slab;
                 }
@@ -94,7 +94,12 @@ namespace GetBooksProject.Controls
 
         private void GetFullInfo(object sender, EventArgs e)
         {
+            BookSlab slab = (BookSlab)sender;
+            ProductBook book = (ProductBook)slab.GetBook();
 
+            slab.SetBook(_parser.GetBook(book.URL));
+
+            slab.MouseClick -= GetFullInfo;
         }
     }
 }

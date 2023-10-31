@@ -32,6 +32,7 @@ namespace GetBooksProject.Controls
             _visitSite.Text = "Перейти на сайт";
             _visitSite.Top = _add.Top - ButtonIndent - _visitSite.Height;
             _visitSite.Anchor = AnchorStyles.Bottom;
+            _visitSite.MouseClick += visitSitekMouseClick;
             Panel.Controls.Add(_add);
             Panel.Controls.Add(_visitSite);
         }
@@ -61,6 +62,11 @@ namespace GetBooksProject.Controls
             {
                 _addBook.Invoke((ProductBook)Book);
             }
+        }
+
+        public void visitSitekMouseClick(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(((ProductBook)Book).URL);
         }
     }
 }

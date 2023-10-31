@@ -8,11 +8,11 @@ namespace GetBooksProject.Controls
 {
     class BookSlab : Panel
     {
-        private Book _book;
-        private Label _shortInfo;
-        private PictureBox _picture;
-        private BookPanel _display;
-        private TransparentPanel _transparentPanel;
+        protected Book _book;
+        protected Label _shortInfo;
+        protected PictureBox _picture;
+        protected BookPanel _display;
+        protected TransparentPanel _transparentPanel;
 
 
         public BookSlab(Book book, BookPanel display)
@@ -23,6 +23,18 @@ namespace GetBooksProject.Controls
             _picture = new PictureBox();
             _transparentPanel = new TransparentPanel();
             SetParameters();
+        }
+
+        public Book GetBook()
+        {
+            return _book;
+        }
+
+        public void SetBook(Book book)
+        {
+            _book = book;
+            _shortInfo.Text = Format(book.GetShortInfo());
+            Form1.SetPicture(_picture, book.ImagePath);
         }
 
         private void SetParameters()
