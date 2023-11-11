@@ -101,7 +101,6 @@
     <Compile Include="DBLayer\PublishingHouseReader.cs" />
     <Compile Include="DBLayer\UpperFunction.cs" />
     <Compile Include="Entity\Book.cs" />
-    <Compile Include="Entity\Library.cs" />
     <Compile Include="Entity\ProductBook.cs" />
     <Compile Include="Entity\StorageBook.cs" />
     <Compile Include="Form1.cs">
